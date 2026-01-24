@@ -283,21 +283,25 @@
                     <div class="form-group">
                         <label data-i18n="form.s1.lang">Langue de la chanson</label>
                         <select id="songLanguage">
-                            <option value="french">🇫🇷 Français</option>
-                            <option value="english">🇬🇧 Anglais</option>
+                            <option value="french">Français</option>
+                            <option value="english">Anglais</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s1.occasion">Pour quelle occasion?</label>
-                        <select id="occasion">
+                        <select id="occasion" onchange="toggleOtherField()">
                             <option value="" disabled selected>-- Choisir une occasion --</option>
-                            <option value="valentines">💝 St-Valentin</option>
-                            <option value="anniversary">🎂 Anniversaire</option>
-                            <option value="proposal">💍 Demande en mariage</option>
-                            <option value="datenight">🌙 Soirée romantique</option>
-                            <option value="achievement">🏆 Accomplissement</option>
-                            <option value="other">✨ Autre</option>
+                            <option value="valentines">St-Valentin</option>
+                            <option value="anniversary">Anniversaire</option>
+                            <option value="proposal">Demande en mariage</option>
+                            <option value="datenight">Soirée romantique</option>
+                            <option value="achievement">Accomplissement</option>
+                            <option value="other">Autre</option>
                         </select>
+                    </div>
+                    <div class="form-group" id="otherOccasionGroup" style="display:none;">
+                        <label>Précisez l'occasion</label>
+                        <input type="text" id="otherOccasion" placeholder="Ex: Fête des mères, Naissance, etc.">
                     </div>
                     <div class="form-nav"><button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button></div>
                 </div>
@@ -333,31 +337,31 @@
                     <div class="form-group">
                         <label data-i18n="form.s3.genre">Genre musical</label>
                         <select id="genre">
-                            <option value="pop">🎤 Pop</option>
-                            <option value="rock">🎸 Rock alternatif</option>
-                            <option value="soul">🎷 Soul</option>
-                            <option value="jazz">🎺 Jazz</option>
-                            <option value="country">🤠 Country Québécois</option>
-                            <option value="folk">🪕 Folk</option>
-                            <option value="rnb">🎹 R&B</option>
-                            <option value="afrobeat">🥁 Afrobeat</option>
+                            <option value="pop">Pop</option>
+                            <option value="rock">Rock alternatif</option>
+                            <option value="soul">Soul</option>
+                            <option value="jazz">Jazz</option>
+                            <option value="country">Country Québécois</option>
+                            <option value="folk">Folk</option>
+                            <option value="rnb">R&B</option>
+                            <option value="afrobeat">Afrobeat</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s3.mood">Ambiance</label>
                         <select id="mood">
-                            <option value="romantic">💕 Romantique</option>
-                            <option value="happy">😊 Joyeux</option>
-                            <option value="heartfelt">🥹 Émouvant</option>
-                            <option value="chill">😌 Doux/Calme</option>
+                            <option value="romantic">Romantique</option>
+                            <option value="happy">Joyeux</option>
+                            <option value="heartfelt">Émouvant</option>
+                            <option value="chill">Doux/Calme</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s3.vocal">Voix</label>
                         <select id="vocal">
-                            <option value="any">🎵 Peu importe</option>
-                            <option value="male">👨 Masculine</option>
-                            <option value="female">👩 Féminine</option>
+                            <option value="any">Peu importe</option>
+                            <option value="male">Masculine</option>
+                            <option value="female">Féminine</option>
                         </select>
                     </div>
                     <div class="form-nav">
@@ -371,9 +375,16 @@
                     <p class="subtitle" data-i18n="form.s4.sub">Finalisez votre commande via Stripe</p>
                     <div class="payment-summary">
                         <h4 data-i18n="form.s4.summary">Résumé de commande</h4>
-                        <div class="payment-item"><span data-i18n="form.s4.product">Chanson personnalisée</span><span id="productPrice">29$</span></div>
-                        <div class="payment-item"><span data-i18n="form.s4.delivery">Livraison 48h</span><span data-i18n="form.s4.included">Inclus</span></div>
+                        <div class="payment-item"><span id="productName">Chanson personnalisée</span><span id="productPrice">29$</span></div>
+                        <div class="payment-item"><span id="deliveryText">Livraison 48h</span><span id="deliveryPrice">Inclus</span></div>
+                        <div class="payment-item" id="urgentLine" style="display:none;color:var(--coral)"><span>⚡ Livraison urgente (6h)</span><span>+15$</span></div>
                         <div class="payment-item total"><span>Total</span><span id="totalPrice">29$ CAD</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px;border:2px solid var(--gray-light);border-radius:12px;transition:all .3s" id="urgentLabel">
+                            <input type="checkbox" id="urgentDelivery" onchange="updateTotal()" style="width:20px;height:20px;cursor:pointer">
+                            <span>⚡ <strong>Livraison urgente en 6h</strong> <span style="color:var(--coral)">(+15$)</span></span>
+                        </label>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s4.email">Email (pour recevoir votre chanson)</label>
@@ -566,17 +577,22 @@ document.getElementById('payBtn').addEventListener('click', async () => {
     payBtn.disabled = true;
     payBtn.innerHTML = '<span class="spinner"></span> ' + (currentLang === 'fr' ? 'Redirection...' : 'Redirecting...');
 
+    const occasionValue = document.getElementById('occasion').value;
+    const otherOccasion = document.getElementById('otherOccasion').value;
+    const urgentDelivery = document.getElementById('urgentDelivery').checked;
+
     const songData = {
         recipientName: document.getElementById('recipientName').value,
         language: document.getElementById('songLanguage').value,
-        occasion: document.getElementById('occasion').value,
+        occasion: occasionValue === 'other' ? `Autre: ${otherOccasion}` : occasionValue,
         meetStory: document.getElementById('meetStory').value,
         bestMemory: document.getElementById('bestMemory').value,
         whatILove: document.getElementById('whatILove').value,
         specialWord: document.getElementById('specialWord').value,
         genre: document.getElementById('genre').value,
         mood: document.getElementById('mood').value,
-        vocal: document.getElementById('vocal').value
+        vocal: document.getElementById('vocal').value,
+        urgentDelivery: urgentDelivery
     };
 
     try {
@@ -587,7 +603,8 @@ document.getElementById('payBtn').addEventListener('click', async () => {
                 plan: selectedPlan,
                 email: email,
                 songData: songData,
-                language: currentLang
+                language: currentLang,
+                urgentDelivery: urgentDelivery
             })
         });
 
@@ -624,6 +641,44 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
 });
+
+// Toggle champ "Autre" occasion
+function toggleOtherField() {
+    const occasion = document.getElementById('occasion').value;
+    const otherGroup = document.getElementById('otherOccasionGroup');
+    otherGroup.style.display = occasion === 'other' ? 'block' : 'none';
+}
+
+// Mise à jour du total avec livraison urgente
+function updateTotal() {
+    const urgent = document.getElementById('urgentDelivery').checked;
+    const urgentLine = document.getElementById('urgentLine');
+    const urgentLabel = document.getElementById('urgentLabel');
+    
+    let total = selectedPrice;
+    if (urgent) {
+        total += 15;
+        urgentLine.style.display = 'flex';
+        urgentLabel.style.borderColor = 'var(--coral)';
+        urgentLabel.style.background = 'rgba(239,91,108,.05)';
+    } else {
+        urgentLine.style.display = 'none';
+        urgentLabel.style.borderColor = 'var(--gray-light)';
+        urgentLabel.style.background = 'transparent';
+    }
+    
+    document.getElementById('totalPrice').textContent = total + '$ CAD';
+    updatePayBtn();
+}
+
+// Mise à jour du bouton payer
+function updatePayBtn() {
+    const payBtn = document.getElementById('payBtn');
+    const urgent = document.getElementById('urgentDelivery')?.checked || false;
+    let total = selectedPrice + (urgent ? 15 : 0);
+    const base = currentLang === 'fr' ? '💳 Payer' : '💳 Pay';
+    payBtn.innerHTML = `${base} ${total}$ CAD`;
+}
 
 setLang('fr');
 </script>
