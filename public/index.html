@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMORIX | Chaque amour a sa chanson</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--coral:#EF5B6C;--coral-dark:#D94A5A;--black:#2A2A2A;--white:#FFF;--gray-light:#F5F5F5;--gray:#888;--success:#4CAF50;--shadow:0 4px 30px rgba(239,91,108,.15);--shadow-lg:0 20px 60px rgba(239,91,108,.2)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden}
+        .bg-pattern{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.5;background-image:radial-gradient(circle at 15% 85%,rgba(239,91,108,.08) 0%,transparent 40%),radial-gradient(circle at 85% 15%,rgba(239,91,108,.05) 0%,transparent 35%)}
+        nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);box-shadow:0 2px 30px rgba(0,0,0,.08)}
+        .nav-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .logo{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+        .logo img{height:40px}
+        .logo-text{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--black);letter-spacing:2px}
+        .nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+        .nav-links a{text-decoration:none;color:var(--black);font-weight:500;font-size:.9rem;transition:color .3s}
+        .nav-links a:hover{color:var(--coral)}
+        .lang-switch{display:flex;gap:.3rem;background:var(--gray-light);padding:.3rem;border-radius:50px}
+        .lang-btn{padding:.4rem .8rem;border:none;background:transparent;border-radius:50px;cursor:pointer;font-weight:600;font-size:.8rem;color:var(--gray);transition:all .3s}
+        .lang-btn.active{background:var(--white);color:var(--black);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+        .nav-cta{background:var(--coral)!important;color:var(--white)!important;padding:.75rem 1.5rem;border-radius:50px;font-weight:600}
+        .nav-cta:hover{background:var(--coral-dark)!important}
+        .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:7rem 2rem 5rem;z-index:10;position:relative}
+        .hero-content{text-align:center;max-width:900px}
+        .hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:var(--white);padding:.6rem 1.4rem;border-radius:50px;font-size:.85rem;color:var(--coral);font-weight:600;margin-bottom:2.5rem;box-shadow:var(--shadow);border:1px solid rgba(239,91,108,.15);animation:fadeUp .8s ease forwards;opacity:0}
+        .hero-badge .pulse{width:8px;height:8px;background:var(--coral);border-radius:50%;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,7vw,4.5rem);font-weight:600;line-height:1.15;margin-bottom:1.5rem;color:var(--black);animation:fadeUp .8s ease .2s forwards;opacity:0}
+        .hero h1 .accent{color:var(--coral);font-style:italic}
+        .hero-subtitle{font-size:1.15rem;color:var(--gray);margin-bottom:3rem;line-height:1.7;animation:fadeUp .8s ease .4s forwards;opacity:0}
+        .hero-cta{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s ease .6s forwards;opacity:0}
+        .btn{padding:1.1rem 2.5rem;border-radius:50px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:none}
+        .btn-primary{background:var(--coral);color:var(--white);box-shadow:var(--shadow)}
+        .btn-primary:hover{background:var(--coral-dark);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+        .btn-secondary{background:var(--white);color:var(--black);border:2px solid var(--black)}
+        .btn-secondary:hover{background:var(--black);color:var(--white)}
+        .btn:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
+        .hero-price{margin-top:3rem;animation:fadeUp .8s ease .8s forwards;opacity:0}
+        .price-tag{display:inline-flex;align-items:baseline;gap:.4rem;background:var(--black);padding:1rem 2.5rem;border-radius:50px;color:var(--white)}
+        .price-tag .amount{font-size:2rem;font-weight:700}
+        .price-tag .details{font-size:.9rem;opacity:.85}
+        section{position:relative;z-index:10;padding:6rem 2rem}
+        .section-header{text-align:center;max-width:700px;margin:0 auto 4rem}
+        .section-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,2.8rem);color:var(--black);margin-bottom:1rem;font-weight:600}
+        .section-header p{color:var(--gray);font-size:1.1rem;line-height:1.7}
+        .how-it-works{background:var(--gray-light)}
+        .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1200px;margin:0 auto}
+        .step{text-align:center;padding:2.5rem 2rem;border-radius:24px;background:var(--white);transition:all .3s}
+        .step:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+        .step-number{width:60px;height:60px;background:var(--black);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;margin:0 auto 1.5rem;font-family:'Cormorant Garamond',serif}
+        .step h3{font-size:1.2rem;margin-bottom:.8rem;color:var(--black);font-weight:600}
+        .step p{color:var(--gray);line-height:1.6;font-size:.95rem}
+        .pricing{background:var(--white)}
+        .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+        .pricing-card{background:var(--white);border-radius:24px;padding:2.5rem;text-align:center;transition:all .3s;border:2px solid var(--gray-light);position:relative}
+        .pricing-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-lg);border-color:transparent}
+        .pricing-card.featured{border-color:var(--coral)}
+        .pricing-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--coral);color:var(--white);padding:.5rem 1.5rem;border-radius:50px;font-size:.8rem;font-weight:700;text-transform:uppercase}
+        .pricing-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.5rem;color:var(--black)}
+        .pricing-card .price{font-size:3rem;font-weight:700;color:var(--black);margin:1rem 0}
+        .pricing-card .price span{font-size:1rem;color:var(--gray);font-weight:400}
+        .pricing-card ul{list-style:none;margin:1.5rem 0;text-align:left}
+        .pricing-card li{padding:.7rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:.7rem;color:var(--black);font-size:.95rem}
+        .pricing-card li::before{content:'✓';color:var(--coral);font-weight:700}
+        .testimonials{background:var(--gray-light)}
+        .testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;max-width:1200px;margin:0 auto}
+        .testimonial{background:var(--white);padding:2rem;border-radius:24px;position:relative}
+        .testimonial::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:6rem;color:var(--coral);opacity:.15;position:absolute;top:0;left:15px;line-height:1}
+        .testimonial p{font-style:italic;color:var(--black);line-height:1.7;margin-bottom:1.5rem;position:relative;z-index:1}
+        .testimonial-author{display:flex;align-items:center;gap:1rem}
+        .testimonial-author .avatar{width:50px;height:50px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:600}
+        .testimonial-author .info strong{display:block;color:var(--black)}
+        .testimonial-author .info span{font-size:.85rem;color:var(--gray)}
+        .footer-cta{background:var(--coral);color:var(--white);text-align:center;padding:5rem 2rem}
+        .footer-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:1rem}
+        .footer-cta p{opacity:.9;margin-bottom:2rem;font-size:1.1rem}
+        .footer-cta .btn-primary{background:var(--black);color:var(--white)}
+        footer{background:var(--black);color:var(--white);padding:2rem;text-align:center}
+        footer .logo{justify-content:center;margin-bottom:1rem}
+        footer .logo-text{color:var(--white)}
+        footer p{opacity:.5;font-size:.85rem}
+        .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem}
+        .modal-overlay.active{display:flex}
+        .modal{background:var(--white);border-radius:24px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+        .modal-close{position:absolute;top:1rem;right:1rem;width:40px;height:40px;border:none;background:var(--gray-light);border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;z-index:10}
+        .modal-close:hover{background:var(--coral);color:var(--white)}
+        .progress-bar{display:flex;justify-content:space-between;padding:1.5rem 2rem;background:var(--black)}
+        .progress-step{display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative;z-index:1}
+        .progress-step .num{width:35px;height:35px;border-radius:50%;background:rgba(255,255,255,.2);color:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;transition:all .3s}
+        .progress-step.active .num{background:var(--coral);color:var(--white)}
+        .progress-step.done .num{background:var(--success);color:var(--white)}
+        .progress-step .lbl{font-size:.7rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px}
+        .progress-step.active .lbl,.progress-step.done .lbl{color:var(--white)}
+        .form-content{padding:2rem}
+        .form-step{display:none;animation:fadeIn .4s ease}
+        .form-step.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+        .form-step h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--black);margin-bottom:.5rem}
+        .form-step .subtitle{color:var(--gray);margin-bottom:1.5rem;font-size:.9rem}
+        .form-group{margin-bottom:1.3rem}
+        .form-group label{display:block;margin-bottom:.4rem;font-weight:600;color:var(--black);font-size:.9rem}
+        .form-group .opt{font-weight:400;color:var(--gray);font-size:.8rem}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:.9rem 1rem;border:2px solid var(--gray-light);border-radius:12px;font-size:.95rem;font-family:inherit;transition:all .3s;background:var(--white)}
+        .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 4px rgba(239,91,108,.1)}
+        .form-group textarea{min-height:100px;resize:vertical}
+        .option-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-bottom:1rem}
+        .option-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+        .option-card{padding:1rem;border:2px solid var(--gray-light);border-radius:14px;cursor:pointer;transition:all .3s;text-align:center;position:relative}
+        .option-card:hover{border-color:var(--coral);background:rgba(239,91,108,.03)}
+        .option-card.selected{border-color:var(--coral);background:rgba(239,91,108,.08)}
+        .option-card.featured{border-color:var(--coral);background:linear-gradient(135deg,rgba(239,91,108,.1) 0%,rgba(239,91,108,.05) 100%)}
+        .option-card.featured::before{content:attr(data-badge);position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--coral);color:var(--white);padding:.2rem .6rem;border-radius:50px;font-size:.65rem;font-weight:700;white-space:nowrap}
+        .option-card .icon{font-size:1.5rem;margin-bottom:.3rem}
+        .option-card .title{font-weight:600;color:var(--black);font-size:.85rem}
+        .option-card input{position:absolute;opacity:0;pointer-events:none}
+        .form-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-light)}
+        .form-nav .btn{flex:1;justify-content:center}
+        .btn-back{background:var(--gray-light);color:var(--black)}
+        .btn-back:hover{background:#e0e0e0}
+        .payment-summary{background:var(--gray-light);border-radius:14px;padding:1.2rem;margin-bottom:1.5rem}
+        .payment-summary h4{font-size:.95rem;margin-bottom:.8rem;color:var(--black)}
+        .payment-item{display:flex;justify-content:space-between;padding:.4rem 0;font-size:.9rem}
+        .payment-item.total{border-top:2px solid var(--black);margin-top:.5rem;padding-top:.8rem;font-weight:700;font-size:1.1rem}
+        .secure-badge{display:flex;align-items:center;justify-content:center;gap:.5rem;color:var(--gray);font-size:.8rem;margin-top:1.2rem}
+        .spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        @media(max-width:768px){.nav-links{display:none}.option-grid{grid-template-columns:1fr}.option-grid.cols-3{grid-template-columns:repeat(2,1fr)}.pricing-grid,.testimonial-grid{grid-template-columns:1fr}.progress-step .lbl{display:none}.form-content{padding:1.5rem}}
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 15 L15 85 L25 85 L35 65 L65 65 L75 85 L85 85 Z' fill='none' stroke='%232A2A2A' stroke-width='4'/%3E%3Cpath d='M35 55 L65 55' stroke='%232A2A2A' stroke-width='4'/%3E%3Cpath d='M50 8 C55 8 60 13 60 20 C60 30 50 35 50 35 C50 35 40 30 40 20 C40 13 45 8 50 8' fill='%23EF5B6C'/%3E%3C/svg%3E" alt="AMORIX">
+                <span class="logo-text">AMORIX</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#how" data-i18n="nav.how">Comment ça marche</a></li>
+                <li><a href="#pricing" data-i18n="nav.pricing">Tarifs</a></li>
+                <li><a href="#testimonials" data-i18n="nav.testimonials">Témoignages</a></li>
+                <li>
+                    <div class="lang-switch">
+                        <button class="lang-btn active" data-lang="fr">FR</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                    </div>
+                </li>
+                <li><a href="#" class="nav-cta open-form" data-i18n="nav.cta">Commander</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                <span data-i18n="hero.badge">St-Valentin 2026 — Places limitées</span>
+            </div>
+            <h1 data-i18n="hero.title">Offrez une <span class="accent">chanson</span><br>qui raconte votre histoire</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Une chanson personnalisée créée spécialement pour vous.<br>Vos prénoms, vos souvenirs, votre amour — transformés en musique.</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary open-form" data-i18n="hero.cta1">🎵 Créer ma chanson</button>
+                <a href="#how" class="btn btn-secondary" data-i18n="hero.cta2">Découvrir le concept</a>
+            </div>
+            <div class="hero-price">
+                <div class="price-tag">
+                    <span class="amount">29$</span>
+                    <span class="details" data-i18n="hero.price">| Livraison 24h | MP3 + Paroles</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how">
+        <div class="section-header">
+            <h2 data-i18n="how.title">Comment ça fonctionne?</h2>
+            <p data-i18n="how.subtitle">En 3 étapes simples, recevez une chanson unique qui fera pleurer de joie.</p>
+        </div>
+        <div class="steps">
+            <div class="step"><div class="step-number">1</div><h3 data-i18n="how.s1.title">Partagez votre histoire</h3><p data-i18n="how.s1.desc">Répondez à quelques questions: prénoms, moments spéciaux, style musical...</p></div>
+            <div class="step"><div class="step-number">2</div><h3 data-i18n="how.s2.title">Je crée votre chanson</h3><p data-i18n="how.s2.desc">En moins de 24h, je compose une chanson unique avec vos détails.</p></div>
+            <div class="step"><div class="step-number">3</div><h3 data-i18n="how.s3.title">Surprenez votre amour</h3><p data-i18n="how.s3.desc">Recevez votre MP3 + paroles. Préparez les mouchoirs!</p></div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="section-header">
+            <h2 data-i18n="pricing.title">Choisissez votre formule</h2>
+            <p data-i18n="pricing.subtitle">Un cadeau unique à partir de 29$ — infiniment plus mémorable qu'un resto.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 data-i18n="pricing.std.name">Standard</h3>
+                <div class="price">29$<span> CAD</span></div>
+                <ul>
+                    <li data-i18n="pricing.std.f1">1 chanson personnalisée</li>
+                    <li data-i18n="pricing.std.f2">Fichier MP3 haute qualité</li>
+                    <li data-i18n="pricing.std.f3">Paroles en PDF</li>
+                    <li data-i18n="pricing.std.f4">Livraison en 24h</li>
+                </ul>
+                <button class="btn btn-secondary open-form" data-plan="standard" data-price="29" data-i18n="pricing.cta">Choisir</button>
+            </div>
+            <div class="pricing-card featured">
+                <span class="badge" data-i18n="pricing.cpl.badge">⭐ Populaire</span>
+                <h3 data-i18n="pricing.cpl.name">Pack Couple</h3>
+                <div class="price">49$<span> CAD</span></div>
+                <ul>
+                    <li data-i18n="pricing.cpl.f1">2 chansons différentes</li>
+                    <li data-i18n="pricing.cpl.f2">Fichiers MP3 haute qualité</li>
+                    <li data-i18n="pricing.cpl.f3">Paroles en PDF</li>
+                    <li data-i18n="pricing.cpl.f4">St-Val + Anniversaire</li>
+                </ul>
+                <button class="btn btn-primary open-form" data-plan="couple" data-price="49" data-i18n="pricing.cta">Choisir</button>
+            </div>
+            <div class="pricing-card">
+                <h3 data-i18n="pricing.dlx.name">Pack Deluxe</h3>
+                <div class="price">55$<span> CAD</span></div>
+                <ul>
+                    <li data-i18n="pricing.dlx.f1">2 chansons personnalisées</li>
+                    <li data-i18n="pricing.dlx.f2">2 versions chaque (4 MP3)</li>
+                    <li data-i18n="pricing.dlx.f3">Paroles en PDF</li>
+                    <li data-i18n="pricing.dlx.f4">Variété d'ambiances</li>
+                </ul>
+                <button class="btn btn-secondary open-form" data-plan="deluxe" data-price="55" data-i18n="pricing.cta">Choisir</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <h2 data-i18n="test.title">Ils ont fait pleurer leur partenaire</h2>
+            <p data-i18n="test.subtitle">Des centaines de couples ont déjà vécu ce moment magique.</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial"><p data-i18n="test.t1">Après 12 ans de mariage, je pensais plus pouvoir la surprendre. Quand elle a entendu nos prénoms, elle a fondu en larmes!</p><div class="testimonial-author"><div class="avatar">MS</div><div class="info"><strong>Marc S.</strong><span>Montréal</span></div></div></div>
+            <div class="testimonial"><p data-i18n="test.t2">Mon chum est pas émotif, mais quand il a entendu l'histoire de notre premier date... il a pleuré!</p><div class="testimonial-author"><div class="avatar">JL</div><div class="info"><strong>Julie L.</strong><span>Québec</span></div></div></div>
+            <div class="testimonial"><p data-i18n="test.t3">J'ai commandé le Pack Couple. Les deux chansons sont PARFAITES. Service super rapide!</p><div class="testimonial-author"><div class="avatar">PD</div><div class="info"><strong>Philippe D.</strong><span>Laval</span></div></div></div>
+        </div>
+    </section>
+
+    <section class="footer-cta">
+        <h2 data-i18n="cta.title">Prêt à faire pleurer de joie?</h2>
+        <p data-i18n="cta.subtitle">Commandez maintenant et recevez votre chanson en 24h.</p>
+        <button class="btn btn-primary open-form" data-i18n="cta.btn">🎵 Créer ma chanson</button>
+    </section>
+
+    <footer>
+        <a href="#" class="logo" style="margin-bottom:1rem">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 15 L15 85 L25 85 L35 65 L65 65 L75 85 L85 85 Z' fill='none' stroke='white' stroke-width='4'/%3E%3Cpath d='M35 55 L65 55' stroke='white' stroke-width='4'/%3E%3Cpath d='M50 8 C55 8 60 13 60 20 C60 30 50 35 50 35 C50 35 40 30 40 20 C40 13 45 8 50 8' fill='%23EF5B6C'/%3E%3C/svg%3E" alt="AMORIX" style="height:35px">
+            <span class="logo-text">AMORIX</span>
+        </a>
+        <p>© 2026 AMORIX — <span data-i18n="footer.tag">Chaque amour a sa chanson</span> ♥</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <button class="modal-close" id="closeModal">✕</button>
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1"><div class="num">1</div><div class="lbl" data-i18n="form.p1">Infos</div></div>
+                <div class="progress-step" data-step="2"><div class="num">2</div><div class="lbl" data-i18n="form.p2">Histoire</div></div>
+                <div class="progress-step" data-step="3"><div class="num">3</div><div class="lbl" data-i18n="form.p3">Style</div></div>
+                <div class="progress-step" data-step="4"><div class="num">4</div><div class="lbl" data-i18n="form.p4">Paiement</div></div>
+            </div>
+            <div class="form-content">
+                <!-- Step 1 -->
+                <div class="form-step active" data-step="1">
+                    <h3 data-i18n="form.s1.title">Informations de base</h3>
+                    <p class="subtitle" data-i18n="form.s1.sub">Commençons par les détails essentiels</p>
+                    <div class="form-group">
+                        <label data-i18n="form.s1.name">C'est pour qui cette chanson?</label>
+                        <input type="text" id="recipientName" data-i18n-ph="form.s1.namePh" placeholder="Nom de la personne">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s1.lang">Langue de la chanson</label>
+                        <div class="option-grid">
+                            <label class="option-card selected"><input type="radio" name="language" value="french" checked><div class="icon">🇫🇷</div><div class="title" data-i18n="form.s1.langFr">Français</div></label>
+                            <label class="option-card"><input type="radio" name="language" value="english"><div class="icon">🇬🇧</div><div class="title" data-i18n="form.s1.langEn">Anglais</div></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s1.occasion">Pour quelle occasion?</label>
+                        <div class="option-grid">
+                            <label class="option-card featured selected" data-badge="❤️"><input type="radio" name="occasion" value="valentines" checked><div class="icon">💝</div><div class="title" data-i18n="form.s1.occ1">St-Valentin</div></label>
+                            <label class="option-card"><input type="radio" name="occasion" value="anniversary"><div class="icon">🎂</div><div class="title" data-i18n="form.s1.occ2">Anniversaire</div></label>
+                            <label class="option-card"><input type="radio" name="occasion" value="proposal"><div class="icon">💍</div><div class="title" data-i18n="form.s1.occ3">Demande</div></label>
+                            <label class="option-card"><input type="radio" name="occasion" value="datenight"><div class="icon">🌙</div><div class="title" data-i18n="form.s1.occ4">Soirée romantique</div></label>
+                            <label class="option-card"><input type="radio" name="occasion" value="achievement"><div class="icon">🏆</div><div class="title" data-i18n="form.s1.occ5">Accomplissement</div></label>
+                            <label class="option-card"><input type="radio" name="occasion" value="other"><div class="icon">✨</div><div class="title" data-i18n="form.s1.occ6">Autre</div></label>
+                        </div>
+                    </div>
+                    <div class="form-nav"><button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button></div>
+                </div>
+                <!-- Step 2 -->
+                <div class="form-step" data-step="2">
+                    <h3 data-i18n="form.s2.title">Votre histoire</h3>
+                    <p class="subtitle" data-i18n="form.s2.sub">Ces détails rendront votre chanson unique</p>
+                    <div class="form-group">
+                        <label data-i18n="form.s2.meet">Où vous êtes-vous rencontrés?</label>
+                        <textarea id="meetStory" data-i18n-ph="form.s2.meetPh" placeholder="Ex: On s'est rencontrés à une fête en 2018..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s2.memory">Votre plus beau souvenir ensemble</label>
+                        <textarea id="bestMemory" data-i18n-ph="form.s2.memoryPh" placeholder="Ex: Notre premier voyage, la demande sur la plage..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s2.love">Qu'aimez-vous le plus chez cette personne?</label>
+                        <textarea id="whatILove" data-i18n-ph="form.s2.lovePh" placeholder="Ex: Son sourire, sa gentillesse..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label><span data-i18n="form.s2.special">Un mot spécifique à inclure</span> <span class="opt" data-i18n="form.optional">(optionnel)</span></label>
+                        <input type="text" id="specialWord" data-i18n-ph="form.s2.specialPh" placeholder="Ex: un surnom, une expression...">
+                    </div>
+                    <div class="form-nav">
+                        <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
+                        <button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="form-step" data-step="3">
+                    <h3 data-i18n="form.s3.title">Style musical</h3>
+                    <p class="subtitle" data-i18n="form.s3.sub">Choisissez le son parfait pour votre chanson</p>
+                    <div class="form-group">
+                        <label data-i18n="form.s3.genre">Genre musical</label>
+                        <div class="option-grid">
+                            <label class="option-card selected"><input type="radio" name="genre" value="pop" checked><div class="icon">🎤</div><div class="title">Pop</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="rock"><div class="icon">🎸</div><div class="title">Rock alternatif</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="soul"><div class="icon">🎷</div><div class="title">Soul</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="jazz"><div class="icon">🎺</div><div class="title">Jazz</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="country"><div class="icon">🤠</div><div class="title">Country Québécois</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="folk"><div class="icon">🪕</div><div class="title">Folk</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="rnb"><div class="icon">🎹</div><div class="title">R&B</div></label>
+                            <label class="option-card"><input type="radio" name="genre" value="afrobeat"><div class="icon">🥁</div><div class="title">Afrobeat</div></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s3.mood">Ambiance</label>
+                        <div class="option-grid">
+                            <label class="option-card selected"><input type="radio" name="mood" value="romantic" checked><div class="icon">💕</div><div class="title" data-i18n="form.s3.m1">Romantique</div></label>
+                            <label class="option-card"><input type="radio" name="mood" value="happy"><div class="icon">😊</div><div class="title" data-i18n="form.s3.m2">Joyeux</div></label>
+                            <label class="option-card"><input type="radio" name="mood" value="heartfelt"><div class="icon">🥹</div><div class="title" data-i18n="form.s3.m3">Émouvant</div></label>
+                            <label class="option-card"><input type="radio" name="mood" value="chill"><div class="icon">😌</div><div class="title" data-i18n="form.s3.m4">Doux/Calme</div></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s3.vocal">Voix</label>
+                        <div class="option-grid cols-3">
+                            <label class="option-card selected"><input type="radio" name="vocal" value="any" checked><div class="icon">🎵</div><div class="title" data-i18n="form.s3.v1">Peu importe</div></label>
+                            <label class="option-card"><input type="radio" name="vocal" value="male"><div class="icon">👨</div><div class="title" data-i18n="form.s3.v2">Masculine</div></label>
+                            <label class="option-card"><input type="radio" name="vocal" value="female"><div class="icon">👩</div><div class="title" data-i18n="form.s3.v3">Féminine</div></label>
+                        </div>
+                    </div>
+                    <div class="form-nav">
+                        <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
+                        <button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button>
+                    </div>
+                </div>
+                <!-- Step 4 - Payment -->
+                <div class="form-step" data-step="4">
+                    <h3 data-i18n="form.s4.title">Paiement sécurisé</h3>
+                    <p class="subtitle" data-i18n="form.s4.sub">Finalisez votre commande via Stripe</p>
+                    <div class="payment-summary">
+                        <h4 data-i18n="form.s4.summary">Résumé de commande</h4>
+                        <div class="payment-item"><span data-i18n="form.s4.product">Chanson personnalisée</span><span id="productPrice">29$</span></div>
+                        <div class="payment-item"><span data-i18n="form.s4.delivery">Livraison 24h</span><span data-i18n="form.s4.included">Inclus</span></div>
+                        <div class="payment-item total"><span>Total</span><span id="totalPrice">29$ CAD</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form.s4.email">Email (pour recevoir votre chanson)</label>
+                        <input type="email" id="email" data-i18n-ph="form.s4.emailPh" placeholder="votre@email.com" required>
+                    </div>
+                    <div class="form-nav">
+                        <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
+                        <button class="btn btn-primary" id="payBtn" data-i18n="form.s4.pay">💳 Payer avec Stripe</button>
+                    </div>
+                    <div class="secure-badge">🔒 <span data-i18n="form.s4.secure">Paiement sécurisé via Stripe</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+const i18n = {
+    fr: {
+        "nav.how": "Comment ça marche", "nav.pricing": "Tarifs", "nav.testimonials": "Témoignages", "nav.cta": "Commander",
+        "hero.badge": "St-Valentin 2026 — Places limitées", "hero.title": "Offrez une <span class='accent'>chanson</span><br>qui raconte votre histoire",
+        "hero.subtitle": "Une chanson personnalisée créée spécialement pour vous.<br>Vos prénoms, vos souvenirs, votre amour — transformés en musique.",
+        "hero.cta1": "🎵 Créer ma chanson", "hero.cta2": "Découvrir le concept", "hero.price": "| Livraison 24h | MP3 + Paroles",
+        "how.title": "Comment ça fonctionne?", "how.subtitle": "En 3 étapes simples, recevez une chanson unique qui fera pleurer de joie.",
+        "how.s1.title": "Partagez votre histoire", "how.s1.desc": "Répondez à quelques questions: prénoms, moments spéciaux, style musical...",
+        "how.s2.title": "Je crée votre chanson", "how.s2.desc": "En moins de 24h, je compose une chanson unique avec vos détails.",
+        "how.s3.title": "Surprenez votre amour", "how.s3.desc": "Recevez votre MP3 + paroles. Préparez les mouchoirs!",
+        "pricing.title": "Choisissez votre formule", "pricing.subtitle": "Un cadeau unique à partir de 29$ — infiniment plus mémorable qu'un resto.",
+        "pricing.std.name": "Standard", "pricing.std.f1": "1 chanson personnalisée", "pricing.std.f2": "Fichier MP3 haute qualité", "pricing.std.f3": "Paroles en PDF", "pricing.std.f4": "Livraison en 24h",
+        "pricing.cpl.badge": "⭐ Populaire", "pricing.cpl.name": "Pack Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "St-Val + Anniversaire",
+        "pricing.dlx.name": "Pack Deluxe", "pricing.dlx.f1": "2 chansons personnalisées", "pricing.dlx.f2": "2 versions chaque (4 MP3)", "pricing.dlx.f3": "Paroles en PDF", "pricing.dlx.f4": "Variété d'ambiances",
+        "pricing.cta": "Choisir",
+        "test.title": "Ils ont fait pleurer leur partenaire", "test.subtitle": "Des centaines de couples ont déjà vécu ce moment magique.",
+        "test.t1": "Après 12 ans de mariage, je pensais plus pouvoir la surprendre. Quand elle a entendu nos prénoms, elle a fondu en larmes!",
+        "test.t2": "Mon chum est pas émotif, mais quand il a entendu l'histoire de notre premier date... il a pleuré!",
+        "test.t3": "J'ai commandé le Pack Couple. Les deux chansons sont PARFAITES. Service super rapide!",
+        "cta.title": "Prêt à faire pleurer de joie?", "cta.subtitle": "Commandez maintenant et recevez votre chanson en 24h.", "cta.btn": "🎵 Créer ma chanson",
+        "footer.tag": "Chaque amour a sa chanson",
+        "form.p1": "Infos", "form.p2": "Histoire", "form.p3": "Style", "form.p4": "Paiement",
+        "form.s1.title": "Informations de base", "form.s1.sub": "Commençons par les détails essentiels",
+        "form.s1.name": "C'est pour qui cette chanson?", "form.s1.namePh": "Nom de la personne",
+        "form.s1.lang": "Langue de la chanson", "form.s1.langFr": "Français", "form.s1.langEn": "Anglais",
+        "form.s1.occasion": "Pour quelle occasion?", "form.s1.occ1": "St-Valentin", "form.s1.occ2": "Anniversaire", "form.s1.occ3": "Demande", "form.s1.occ4": "Soirée romantique", "form.s1.occ5": "Accomplissement", "form.s1.occ6": "Autre",
+        "form.s2.title": "Votre histoire", "form.s2.sub": "Ces détails rendront votre chanson unique",
+        "form.s2.meet": "Où vous êtes-vous rencontrés?", "form.s2.meetPh": "Ex: On s'est rencontrés à une fête en 2018...",
+        "form.s2.memory": "Votre plus beau souvenir ensemble", "form.s2.memoryPh": "Ex: Notre premier voyage, la demande sur la plage...",
+        "form.s2.love": "Qu'aimez-vous le plus chez cette personne?", "form.s2.lovePh": "Ex: Son sourire, sa gentillesse...",
+        "form.s2.special": "Un mot spécifique à inclure", "form.s2.specialPh": "Ex: un surnom, une expression...", "form.optional": "(optionnel)",
+        "form.s3.title": "Style musical", "form.s3.sub": "Choisissez le son parfait pour votre chanson",
+        "form.s3.genre": "Genre musical", "form.s3.mood": "Ambiance", "form.s3.m1": "Romantique", "form.s3.m2": "Joyeux", "form.s3.m3": "Émouvant", "form.s3.m4": "Doux/Calme",
+        "form.s3.vocal": "Voix", "form.s3.v1": "Peu importe", "form.s3.v2": "Masculine", "form.s3.v3": "Féminine",
+        "form.s4.title": "Paiement sécurisé", "form.s4.sub": "Finalisez votre commande via Stripe", "form.s4.summary": "Résumé de commande",
+        "form.s4.product": "Chanson personnalisée", "form.s4.delivery": "Livraison 24h", "form.s4.included": "Inclus",
+        "form.s4.email": "Email (pour recevoir votre chanson)", "form.s4.emailPh": "votre@email.com",
+        "form.s4.pay": "💳 Payer avec Stripe", "form.s4.secure": "Paiement sécurisé via Stripe",
+        "form.next": "Continuer →", "form.back": "← Retour"
+    },
+    en: {
+        "nav.how": "How it works", "nav.pricing": "Pricing", "nav.testimonials": "Reviews", "nav.cta": "Order",
+        "hero.badge": "Valentine's 2026 — Limited spots", "hero.title": "Gift a <span class='accent'>song</span><br>that tells your story",
+        "hero.subtitle": "A personalized song created just for you.<br>Your names, your memories, your love — turned into music.",
+        "hero.cta1": "🎵 Create my song", "hero.cta2": "Discover the concept", "hero.price": "| 24h delivery | MP3 + Lyrics",
+        "how.title": "How does it work?", "how.subtitle": "In 3 simple steps, receive a unique song that will bring tears of joy.",
+        "how.s1.title": "Share your story", "how.s1.desc": "Answer a few questions: names, special moments, music style...",
+        "how.s2.title": "I create your song", "how.s2.desc": "In less than 24h, I compose a unique song with your details.",
+        "how.s3.title": "Surprise your love", "how.s3.desc": "Receive your MP3 + lyrics. Get the tissues ready!",
+        "pricing.title": "Choose your package", "pricing.subtitle": "A unique gift from $29 — way more memorable than dinner.",
+        "pricing.std.name": "Standard", "pricing.std.f1": "1 personalized song", "pricing.std.f2": "High quality MP3", "pricing.std.f3": "Lyrics PDF", "pricing.std.f4": "24h delivery",
+        "pricing.cpl.badge": "⭐ Popular", "pricing.cpl.name": "Couple Pack", "pricing.cpl.f1": "2 different songs", "pricing.cpl.f2": "High quality MP3s", "pricing.cpl.f3": "Lyrics PDFs", "pricing.cpl.f4": "Valentine's + Anniversary",
+        "pricing.dlx.name": "Deluxe Pack", "pricing.dlx.f1": "2 personalized songs", "pricing.dlx.f2": "2 versions each (4 MP3s)", "pricing.dlx.f3": "Lyrics PDFs", "pricing.dlx.f4": "Variety of moods",
+        "pricing.cta": "Choose",
+        "test.title": "They made their partner cry", "test.subtitle": "Hundreds of couples have already lived this magical moment.",
+        "test.t1": "After 12 years of marriage, I thought I couldn't surprise her anymore. When she heard our names, she burst into tears!",
+        "test.t2": "My boyfriend isn't emotional, but when he heard our first date story... he cried!",
+        "test.t3": "I ordered the Couple Pack. Both songs are PERFECT. Super fast service!",
+        "cta.title": "Ready to bring tears of joy?", "cta.subtitle": "Order now and receive your song within 24h.", "cta.btn": "🎵 Create my song",
+        "footer.tag": "Every love has its song",
+        "form.p1": "Info", "form.p2": "Story", "form.p3": "Style", "form.p4": "Payment",
+        "form.s1.title": "Basic information", "form.s1.sub": "Let's start with the essentials",
+        "form.s1.name": "Who is this song for?", "form.s1.namePh": "Person's name",
+        "form.s1.lang": "Song language", "form.s1.langFr": "French", "form.s1.langEn": "English",
+        "form.s1.occasion": "What's the occasion?", "form.s1.occ1": "Valentine's", "form.s1.occ2": "Anniversary", "form.s1.occ3": "Proposal", "form.s1.occ4": "Date night", "form.s1.occ5": "Achievement", "form.s1.occ6": "Other",
+        "form.s2.title": "Your story", "form.s2.sub": "These details will make your song unique",
+        "form.s2.meet": "Where did you meet?", "form.s2.meetPh": "Ex: We met at a party in 2018...",
+        "form.s2.memory": "Your best memory together", "form.s2.memoryPh": "Ex: Our first trip, the beach proposal...",
+        "form.s2.love": "What do you love most about this person?", "form.s2.lovePh": "Ex: Their smile, their kindness...",
+        "form.s2.special": "A specific word to include", "form.s2.specialPh": "Ex: a nickname, an expression...", "form.optional": "(optional)",
+        "form.s3.title": "Musical style", "form.s3.sub": "Choose the perfect sound for your song",
+        "form.s3.genre": "Music genre", "form.s3.mood": "Mood", "form.s3.m1": "Romantic", "form.s3.m2": "Happy", "form.s3.m3": "Heartfelt", "form.s3.m4": "Chill",
+        "form.s3.vocal": "Voice", "form.s3.v1": "Any", "form.s3.v2": "Male", "form.s3.v3": "Female",
+        "form.s4.title": "Secure payment", "form.s4.sub": "Complete your order via Stripe", "form.s4.summary": "Order summary",
+        "form.s4.product": "Personalized song", "form.s4.delivery": "24h delivery", "form.s4.included": "Included",
+        "form.s4.email": "Email (to receive your song)", "form.s4.emailPh": "your@email.com",
+        "form.s4.pay": "💳 Pay with Stripe", "form.s4.secure": "Secure payment via Stripe",
+        "form.next": "Continue →", "form.back": "← Back"
+    }
+};
+
+let currentLang = 'fr';
+let currentStep = 1;
+let selectedPlan = 'standard';
+let selectedPrice = 29;
+
+function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.dataset.i18nPh;
+        if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+    });
+    updatePayBtn();
+}
+
+function updatePayBtn() {
+    const payBtn = document.getElementById('payBtn');
+    const base = currentLang === 'fr' ? '💳 Payer' : '💳 Pay';
+    payBtn.innerHTML = `${base} ${selectedPrice}$ CAD`;
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+// Modal
+const modal = document.getElementById('modal');
+document.querySelectorAll('.open-form').forEach(btn => {
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        if (btn.dataset.plan) {
+            selectedPlan = btn.dataset.plan;
+            selectedPrice = parseInt(btn.dataset.price);
+        }
+        document.getElementById('productPrice').textContent = selectedPrice + '$';
+        document.getElementById('totalPrice').textContent = selectedPrice + '$ CAD';
+        updatePayBtn();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+document.getElementById('closeModal').addEventListener('click', () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+});
+
+modal.addEventListener('click', e => {
+    if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// Form navigation
+function goToStep(step) {
+    currentStep = step;
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    document.querySelector(`.form-step[data-step="${step}"]`).classList.add('active');
+    document.querySelectorAll('.progress-step').forEach(s => {
+        const sStep = parseInt(s.dataset.step);
+        s.classList.remove('active', 'done');
+        if (sStep === step) s.classList.add('active');
+        if (sStep < step) s.classList.add('done');
+    });
+}
+
+document.querySelectorAll('.next-btn').forEach(btn => {
+    btn.addEventListener('click', () => goToStep(currentStep + 1));
+});
+
+document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.addEventListener('click', () => goToStep(currentStep - 1));
+});
+
+// Stripe Payment
+document.getElementById('payBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value;
+    if (!email || !email.includes('@')) {
+        alert(currentLang === 'fr' ? 'Veuillez entrer un email valide' : 'Please enter a valid email');
+        return;
+    }
+
+    const payBtn = document.getElementById('payBtn');
+    payBtn.disabled = true;
+    payBtn.innerHTML = '<span class="spinner"></span> ' + (currentLang === 'fr' ? 'Redirection...' : 'Redirecting...');
+
+    const songData = {
+        recipientName: document.getElementById('recipientName').value,
+        language: document.querySelector('input[name="language"]:checked')?.value,
+        occasion: document.querySelector('input[name="occasion"]:checked')?.value,
+        meetStory: document.getElementById('meetStory').value,
+        bestMemory: document.getElementById('bestMemory').value,
+        whatILove: document.getElementById('whatILove').value,
+        specialWord: document.getElementById('specialWord').value,
+        genre: document.querySelector('input[name="genre"]:checked')?.value,
+        mood: document.querySelector('input[name="mood"]:checked')?.value,
+        vocal: document.querySelector('input[name="vocal"]:checked')?.value
+    };
+
+    try {
+        const response = await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plan: selectedPlan,
+                email: email,
+                songData: songData,
+                language: currentLang
+            })
+        });
+
+        const data = await response.json();
+        if (data.url) {
+            window.location.href = data.url;
+        } else {
+            throw new Error(data.error || 'Erreur');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert(currentLang === 'fr' ? 'Erreur de paiement. Réessayez.' : 'Payment error. Please try again.');
+        payBtn.disabled = false;
+        updatePayBtn();
+    }
+});
+
+// Option cards
+document.querySelectorAll('.option-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const name = card.querySelector('input').name;
+        document.querySelectorAll(`.option-card input[name="${name}"]`).forEach(c => c.closest('.option-card').classList.remove('selected'));
+        card.classList.add('selected');
+        card.querySelector('input').checked = true;
+    });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+        if (this.classList.contains('open-form')) return;
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+setLang('fr');
+</script>
+</body>
+</html>
