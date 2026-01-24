@@ -282,21 +282,22 @@
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s1.lang">Langue de la chanson</label>
-                        <div class="option-grid">
-                            <label class="option-card selected"><input type="radio" name="language" value="french" checked><div class="icon">🇫🇷</div><div class="title" data-i18n="form.s1.langFr">Français</div></label>
-                            <label class="option-card"><input type="radio" name="language" value="english"><div class="icon">🇬🇧</div><div class="title" data-i18n="form.s1.langEn">Anglais</div></label>
-                        </div>
+                        <select id="songLanguage">
+                            <option value="french">🇫🇷 Français</option>
+                            <option value="english">🇬🇧 Anglais</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s1.occasion">Pour quelle occasion?</label>
-                        <div class="option-grid">
-                            <label class="option-card featured" data-badge="❤️"><input type="radio" name="occasion" value="valentines"><div class="icon">💝</div><div class="title" data-i18n="form.s1.occ1">St-Valentin</div></label>
-                            <label class="option-card"><input type="radio" name="occasion" value="anniversary"><div class="icon">🎂</div><div class="title" data-i18n="form.s1.occ2">Anniversaire</div></label>
-                            <label class="option-card"><input type="radio" name="occasion" value="proposal"><div class="icon">💍</div><div class="title" data-i18n="form.s1.occ3">Demande</div></label>
-                            <label class="option-card"><input type="radio" name="occasion" value="datenight"><div class="icon">🌙</div><div class="title" data-i18n="form.s1.occ4">Soirée romantique</div></label>
-                            <label class="option-card"><input type="radio" name="occasion" value="achievement"><div class="icon">🏆</div><div class="title" data-i18n="form.s1.occ5">Accomplissement</div></label>
-                            <label class="option-card"><input type="radio" name="occasion" value="other"><div class="icon">✨</div><div class="title" data-i18n="form.s1.occ6">Autre</div></label>
-                        </div>
+                        <select id="occasion">
+                            <option value="" disabled selected>-- Choisir une occasion --</option>
+                            <option value="valentines">💝 St-Valentin</option>
+                            <option value="anniversary">🎂 Anniversaire</option>
+                            <option value="proposal">💍 Demande en mariage</option>
+                            <option value="datenight">🌙 Soirée romantique</option>
+                            <option value="achievement">🏆 Accomplissement</option>
+                            <option value="other">✨ Autre</option>
+                        </select>
                     </div>
                     <div class="form-nav"><button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button></div>
                 </div>
@@ -331,33 +332,33 @@
                     <p class="subtitle" data-i18n="form.s3.sub">Choisissez le son parfait pour votre chanson</p>
                     <div class="form-group">
                         <label data-i18n="form.s3.genre">Genre musical</label>
-                        <div class="option-grid">
-                            <label class="option-card selected"><input type="radio" name="genre" value="pop" checked><div class="icon">🎤</div><div class="title">Pop</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="rock"><div class="icon">🎸</div><div class="title">Rock alternatif</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="soul"><div class="icon">🎷</div><div class="title">Soul</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="jazz"><div class="icon">🎺</div><div class="title">Jazz</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="country"><div class="icon">🤠</div><div class="title">Country Québécois</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="folk"><div class="icon">🪕</div><div class="title">Folk</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="rnb"><div class="icon">🎹</div><div class="title">R&B</div></label>
-                            <label class="option-card"><input type="radio" name="genre" value="afrobeat"><div class="icon">🥁</div><div class="title">Afrobeat</div></label>
-                        </div>
+                        <select id="genre">
+                            <option value="pop">🎤 Pop</option>
+                            <option value="rock">🎸 Rock alternatif</option>
+                            <option value="soul">🎷 Soul</option>
+                            <option value="jazz">🎺 Jazz</option>
+                            <option value="country">🤠 Country Québécois</option>
+                            <option value="folk">🪕 Folk</option>
+                            <option value="rnb">🎹 R&B</option>
+                            <option value="afrobeat">🥁 Afrobeat</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s3.mood">Ambiance</label>
-                        <div class="option-grid">
-                            <label class="option-card selected"><input type="radio" name="mood" value="romantic" checked><div class="icon">💕</div><div class="title" data-i18n="form.s3.m1">Romantique</div></label>
-                            <label class="option-card"><input type="radio" name="mood" value="happy"><div class="icon">😊</div><div class="title" data-i18n="form.s3.m2">Joyeux</div></label>
-                            <label class="option-card"><input type="radio" name="mood" value="heartfelt"><div class="icon">🥹</div><div class="title" data-i18n="form.s3.m3">Émouvant</div></label>
-                            <label class="option-card"><input type="radio" name="mood" value="chill"><div class="icon">😌</div><div class="title" data-i18n="form.s3.m4">Doux/Calme</div></label>
-                        </div>
+                        <select id="mood">
+                            <option value="romantic">💕 Romantique</option>
+                            <option value="happy">😊 Joyeux</option>
+                            <option value="heartfelt">🥹 Émouvant</option>
+                            <option value="chill">😌 Doux/Calme</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s3.vocal">Voix</label>
-                        <div class="option-grid cols-3">
-                            <label class="option-card selected"><input type="radio" name="vocal" value="any" checked><div class="icon">🎵</div><div class="title" data-i18n="form.s3.v1">Peu importe</div></label>
-                            <label class="option-card"><input type="radio" name="vocal" value="male"><div class="icon">👨</div><div class="title" data-i18n="form.s3.v2">Masculine</div></label>
-                            <label class="option-card"><input type="radio" name="vocal" value="female"><div class="icon">👩</div><div class="title" data-i18n="form.s3.v3">Féminine</div></label>
-                        </div>
+                        <select id="vocal">
+                            <option value="any">🎵 Peu importe</option>
+                            <option value="male">👨 Masculine</option>
+                            <option value="female">👩 Féminine</option>
+                        </select>
                     </div>
                     <div class="form-nav">
                         <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
@@ -567,15 +568,15 @@ document.getElementById('payBtn').addEventListener('click', async () => {
 
     const songData = {
         recipientName: document.getElementById('recipientName').value,
-        language: document.querySelector('input[name="language"]:checked')?.value,
-        occasion: document.querySelector('input[name="occasion"]:checked')?.value,
+        language: document.getElementById('songLanguage').value,
+        occasion: document.getElementById('occasion').value,
         meetStory: document.getElementById('meetStory').value,
         bestMemory: document.getElementById('bestMemory').value,
         whatILove: document.getElementById('whatILove').value,
         specialWord: document.getElementById('specialWord').value,
-        genre: document.querySelector('input[name="genre"]:checked')?.value,
-        mood: document.querySelector('input[name="mood"]:checked')?.value,
-        vocal: document.querySelector('input[name="vocal"]:checked')?.value
+        genre: document.getElementById('genre').value,
+        mood: document.getElementById('mood').value,
+        vocal: document.getElementById('vocal').value
     };
 
     try {
