@@ -159,7 +159,7 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse"></span>
-                <span data-i18n="hero.badge">St-Valentin 2026 — Places limitées</span>
+                <span data-i18n="hero.badge">Saint-Valentin 2026 — Places limitées</span>
             </div>
             <h1 data-i18n="hero.title">Offrez une <span class="accent">chanson</span><br>qui raconte votre histoire</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">Une chanson personnalisée créée spécialement pour vous.<br>Vos prénoms, vos souvenirs, votre amour — transformés en musique.</p>
@@ -213,7 +213,7 @@
                     <li data-i18n="pricing.cpl.f1">2 chansons différentes</li>
                     <li data-i18n="pricing.cpl.f2">Fichiers MP3 haute qualité</li>
                     <li data-i18n="pricing.cpl.f3">Paroles en PDF</li>
-                    <li data-i18n="pricing.cpl.f4">St-Val + Anniversaire</li>
+                    <li data-i18n="pricing.cpl.f4">Saint-Valentin + Anniversaire</li>
                 </ul>
                 <button class="btn btn-primary open-form" data-plan="couple" data-plan-name="Pack Couple" data-price="49" data-i18n="pricing.cta">Choisir</button>
             </div>
@@ -229,6 +229,10 @@
                 <button class="btn btn-secondary open-form" data-plan="deluxe" data-plan-name="Pack Deluxe" data-price="55" data-i18n="pricing.cta">Choisir</button>
             </div>
         </div>
+        <p style="text-align:center;margin-top:2rem;color:var(--gray);font-size:.85rem">
+            <span data-i18n="pricing.express">Besoin de votre chanson rapidement? Livraison express en 6h disponible (+15$)</span><br>
+            <span data-i18n="pricing.taxes" style="font-size:.8rem">Les taxes applicables seront ajoutées au moment du paiement.</span>
+        </p>
     </section>
 
     <section class="testimonials" id="testimonials">
@@ -291,7 +295,7 @@
                         <label data-i18n="form.s1.occasion">Pour quelle occasion?</label>
                         <select id="occasion" onchange="toggleOtherField()">
                             <option value="" disabled selected>-- Choisir une occasion --</option>
-                            <option value="valentines">St-Valentin</option>
+                            <option value="valentines">Saint-Valentin</option>
                             <option value="anniversary">Anniversaire</option>
                             <option value="proposal">Demande en mariage</option>
                             <option value="datenight">Soirée romantique</option>
@@ -303,7 +307,7 @@
                         <label>Précisez l'occasion</label>
                         <input type="text" id="otherOccasion" placeholder="Ex: Fête des mères, Naissance, etc.">
                     </div>
-                    <div class="form-nav"><button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button></div>
+                    <div class="form-nav"><button class="btn btn-primary next-btn" data-i18n="form.next">Continuer</button></div>
                 </div>
                 <!-- Step 2 -->
                 <div class="form-step" data-step="2">
@@ -326,8 +330,8 @@
                         <input type="text" id="specialWord" data-i18n-ph="form.s2.specialPh" placeholder="Ex: un surnom, une expression...">
                     </div>
                     <div class="form-nav">
-                        <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
-                        <button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button>
+                        <button class="btn btn-back back-btn" data-i18n="form.back">Retour</button>
+                        <button class="btn btn-primary next-btn" data-i18n="form.next">Continuer</button>
                     </div>
                 </div>
                 <!-- Step 3 -->
@@ -365,8 +369,8 @@
                         </select>
                     </div>
                     <div class="form-nav">
-                        <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
-                        <button class="btn btn-primary next-btn" data-i18n="form.next">Continuer →</button>
+                        <button class="btn btn-back back-btn" data-i18n="form.back">Retour</button>
+                        <button class="btn btn-primary next-btn" data-i18n="form.next">Continuer</button>
                     </div>
                 </div>
                 <!-- Step 4 - Payment -->
@@ -375,15 +379,16 @@
                     <p class="subtitle" data-i18n="form.s4.sub">Finalisez votre commande via Stripe</p>
                     <div class="payment-summary">
                         <h4 data-i18n="form.s4.summary">Résumé de commande</h4>
-                        <div class="payment-item"><span id="productName">Chanson personnalisée</span><span id="productPrice">29$</span></div>
-                        <div class="payment-item"><span id="deliveryText">Livraison 48h</span><span id="deliveryPrice">Inclus</span></div>
-                        <div class="payment-item" id="urgentLine" style="display:none;color:var(--coral)"><span>⚡ Livraison urgente (6h)</span><span>+15$</span></div>
-                        <div class="payment-item total"><span>Total</span><span id="totalPrice">29$ CAD</span></div>
+                        <div class="payment-item"><span id="productName">Chanson personnalisée</span><span id="productPrice">29.00$</span></div>
+                        <div class="payment-item" id="urgentLine" style="display:none"><span>Livraison EXPRESS (6h)</span><span>15.00$</span></div>
+                        <div class="payment-item" style="color:var(--gray);font-size:.85rem"><span>TPS (5%)</span><span id="tpsAmount">1.45$</span></div>
+                        <div class="payment-item" style="color:var(--gray);font-size:.85rem"><span>TVQ (9.975%)</span><span id="tvqAmount">2.89$</span></div>
+                        <div class="payment-item total"><span>Total</span><span id="totalPrice">33.34$ CAD</span></div>
                     </div>
                     <div class="form-group">
                         <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px;border:2px solid var(--gray-light);border-radius:12px;transition:all .3s" id="urgentLabel">
                             <input type="checkbox" id="urgentDelivery" onchange="updateTotal()" style="width:20px;height:20px;cursor:pointer">
-                            <span>⚡ <strong>Livraison urgente en 6h</strong> <span style="color:var(--coral)">(+15$)</span></span>
+                            <span><strong>Livraison EXPRESS en 6h</strong> <span style="color:var(--coral)">(+15$)</span></span>
                         </label>
                     </div>
                     <div class="form-group">
@@ -391,8 +396,8 @@
                         <input type="email" id="email" data-i18n-ph="form.s4.emailPh" placeholder="votre@email.com" required>
                     </div>
                     <div class="form-nav">
-                        <button class="btn btn-back back-btn" data-i18n="form.back">← Retour</button>
-                        <button class="btn btn-primary" id="payBtn" data-i18n="form.s4.pay">💳 Payer avec Stripe</button>
+                        <button class="btn btn-back back-btn" data-i18n="form.back">Retour</button>
+                        <button class="btn btn-primary" id="payBtn" data-i18n="form.s4.pay">Payer avec Stripe</button>
                     </div>
                     <div class="secure-badge">🔒 <span data-i18n="form.s4.secure">Paiement sécurisé via Stripe</span></div>
                 </div>
@@ -404,7 +409,7 @@
 const i18n = {
     fr: {
         "nav.how": "Comment ça marche", "nav.pricing": "Tarifs", "nav.testimonials": "Témoignages", "nav.cta": "Commander",
-        "hero.badge": "St-Valentin 2026 — Places limitées", "hero.title": "Offrez une <span class='accent'>chanson</span><br>qui raconte votre histoire",
+        "hero.badge": "Saint-Valentin 2026 — Places limitées", "hero.title": "Offrez une <span class='accent'>chanson</span><br>qui raconte votre histoire",
         "hero.subtitle": "Une chanson personnalisée créée spécialement pour vous.<br>Vos prénoms, vos souvenirs, votre amour — transformés en musique.",
         "hero.cta1": "🎵 Créer notre chanson", "hero.cta2": "Découvrir le concept", "hero.price": "| Livraison 48h | MP3 + Paroles",
         "how.title": "Comment ça fonctionne?", "how.subtitle": "En 3 étapes simples, recevez une chanson unique qui fera pleurer de joie.",
@@ -413,7 +418,7 @@ const i18n = {
         "how.s3.title": "Surprenez votre amour", "how.s3.desc": "Recevez votre MP3 + paroles. Préparez les mouchoirs!",
         "pricing.title": "Choisissez votre formule", "pricing.subtitle": "Un cadeau unique à partir de 29$ — infiniment plus mémorable qu'un resto.",
         "pricing.std.name": "Standard", "pricing.std.f1": "1 chanson personnalisée", "pricing.std.f2": "Fichier MP3 haute qualité", "pricing.std.f3": "Paroles en PDF", "pricing.std.f4": "Livraison en 48h",
-        "pricing.cpl.badge": "⭐ Populaire", "pricing.cpl.name": "Pack Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "St-Val + Anniversaire",
+        "pricing.cpl.badge": "⭐ Populaire", "pricing.cpl.name": "Pack Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "Saint-Valentin + Anniversaire",
         "pricing.dlx.name": "Pack Deluxe", "pricing.dlx.f1": "2 chansons personnalisées", "pricing.dlx.f2": "2 versions chaque (4 MP3)", "pricing.dlx.f3": "Paroles en PDF", "pricing.dlx.f4": "Variété d'ambiances",
         "pricing.cta": "Choisir",
         "test.title": "Ils ont fait pleurer leur partenaire", "test.subtitle": "Des centaines de couples ont déjà vécu ce moment magique.",
@@ -426,7 +431,7 @@ const i18n = {
         "form.s1.title": "Informations de base", "form.s1.sub": "Commençons par les détails essentiels",
         "form.s1.name": "C'est pour qui cette chanson?", "form.s1.namePh": "Nom de la personne",
         "form.s1.lang": "Langue de la chanson", "form.s1.langFr": "Français", "form.s1.langEn": "Anglais",
-        "form.s1.occasion": "Pour quelle occasion?", "form.s1.occ1": "St-Valentin", "form.s1.occ2": "Anniversaire", "form.s1.occ3": "Demande", "form.s1.occ4": "Soirée romantique", "form.s1.occ5": "Accomplissement", "form.s1.occ6": "Autre",
+        "form.s1.occasion": "Pour quelle occasion?", "form.s1.occ1": "Saint-Valentin", "form.s1.occ2": "Anniversaire", "form.s1.occ3": "Demande", "form.s1.occ4": "Soirée romantique", "form.s1.occ5": "Accomplissement", "form.s1.occ6": "Autre",
         "form.s2.title": "Votre histoire", "form.s2.sub": "Ces détails rendront votre chanson unique",
         "form.s2.meet": "Où vous êtes-vous rencontrés?", "form.s2.meetPh": "Ex: On s'est rencontrés à une fête en 2018...",
         "form.s2.memory": "Votre plus beau souvenir ensemble", "form.s2.memoryPh": "Ex: Notre premier voyage, la demande sur la plage...",
@@ -438,8 +443,8 @@ const i18n = {
         "form.s4.title": "Paiement sécurisé", "form.s4.sub": "Finalisez votre commande via Stripe", "form.s4.summary": "Résumé de commande",
         "form.s4.product": "Chanson personnalisée", "form.s4.delivery": "Livraison 48h", "form.s4.included": "Inclus",
         "form.s4.email": "Email (pour recevoir votre chanson)", "form.s4.emailPh": "votre@email.com",
-        "form.s4.pay": "💳 Payer avec Stripe", "form.s4.secure": "Paiement sécurisé via Stripe",
-        "form.next": "Continuer →", "form.back": "← Retour"
+        "form.s4.pay": "Payer avec Stripe", "form.s4.secure": "Paiement sécurisé via Stripe",
+        "form.next": "Continuer", "form.back": "Retour"
     },
     en: {
         "nav.how": "How it works", "nav.pricing": "Pricing", "nav.testimonials": "Reviews", "nav.cta": "Order",
@@ -477,8 +482,8 @@ const i18n = {
         "form.s4.title": "Secure payment", "form.s4.sub": "Complete your order via Stripe", "form.s4.summary": "Order summary",
         "form.s4.product": "Personalized song", "form.s4.delivery": "48h delivery", "form.s4.included": "Included",
         "form.s4.email": "Email (to receive your song)", "form.s4.emailPh": "your@email.com",
-        "form.s4.pay": "💳 Pay with Stripe", "form.s4.secure": "Secure payment via Stripe",
-        "form.next": "Continue →", "form.back": "← Back"
+        "form.s4.pay": "Pay with Stripe", "form.s4.secure": "Secure payment via Stripe",
+        "form.next": "Continue", "form.back": "Back"
     }
 };
 
@@ -487,6 +492,10 @@ let currentStep = 1;
 let selectedPlan = 'standard';
 let selectedPlanName = 'Standard';
 let selectedPrice = 29;
+
+// Constantes taxes Québec
+const TPS_RATE = 0.05;      // 5%
+const TVQ_RATE = 0.09975;   // 9.975%
 
 function setLang(lang) {
     currentLang = lang;
@@ -504,8 +513,11 @@ function setLang(lang) {
 
 function updatePayBtn() {
     const payBtn = document.getElementById('payBtn');
-    const base = currentLang === 'fr' ? '💳 Payer' : '💳 Pay';
-    payBtn.innerHTML = `${base} ${selectedPrice}$ CAD`;
+    const urgent = document.getElementById('urgentDelivery')?.checked || false;
+    let subtotal = selectedPrice + (urgent ? 15 : 0);
+    const total = subtotal * (1 + TPS_RATE + TVQ_RATE);
+    const base = currentLang === 'fr' ? 'Payer' : 'Pay';
+    payBtn.innerHTML = `${base} ${total.toFixed(2)}$ CAD`;
 }
 
 document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -522,8 +534,21 @@ document.querySelectorAll('.open-form').forEach(btn => {
             selectedPlanName = btn.dataset.planName || 'Standard';
             selectedPrice = parseInt(btn.dataset.price) || 29;
         }
-        document.getElementById('productPrice').textContent = selectedPrice + '$';
-        document.getElementById('totalPrice').textContent = selectedPrice + '$ CAD';
+        // Reset urgent delivery checkbox
+        document.getElementById('urgentDelivery').checked = false;
+        document.getElementById('urgentLine').style.display = 'none';
+        document.getElementById('urgentLabel').style.borderColor = 'var(--gray-light)';
+        document.getElementById('urgentLabel').style.background = 'transparent';
+        
+        // Calcul avec taxes
+        const tps = selectedPrice * TPS_RATE;
+        const tvq = selectedPrice * TVQ_RATE;
+        const total = selectedPrice + tps + tvq;
+        
+        document.getElementById('productPrice').textContent = selectedPrice.toFixed(2) + '$';
+        document.getElementById('tpsAmount').textContent = tps.toFixed(2) + '$';
+        document.getElementById('tvqAmount').textContent = tvq.toFixed(2) + '$';
+        document.getElementById('totalPrice').textContent = total.toFixed(2) + '$ CAD';
         document.getElementById('selectedPlanName').textContent = selectedPlanName;
         document.getElementById('selectedPlanPrice').textContent = selectedPrice + '$ CAD';
         updatePayBtn();
@@ -649,15 +674,16 @@ function toggleOtherField() {
     otherGroup.style.display = occasion === 'other' ? 'block' : 'none';
 }
 
-// Mise à jour du total avec livraison urgente
+// Mise à jour du total avec livraison urgente et taxes
 function updateTotal() {
     const urgent = document.getElementById('urgentDelivery').checked;
     const urgentLine = document.getElementById('urgentLine');
     const urgentLabel = document.getElementById('urgentLabel');
     
-    let total = selectedPrice;
+    // Sous-total avant taxes
+    let subtotal = selectedPrice;
     if (urgent) {
-        total += 15;
+        subtotal += 15;
         urgentLine.style.display = 'flex';
         urgentLabel.style.borderColor = 'var(--coral)';
         urgentLabel.style.background = 'rgba(239,91,108,.05)';
@@ -667,17 +693,18 @@ function updateTotal() {
         urgentLabel.style.background = 'transparent';
     }
     
-    document.getElementById('totalPrice').textContent = total + '$ CAD';
+    // Calcul des taxes
+    const tps = subtotal * TPS_RATE;
+    const tvq = subtotal * TVQ_RATE;
+    const total = subtotal + tps + tvq;
+    
+    // Mise à jour affichage
+    document.getElementById('productPrice').textContent = selectedPrice.toFixed(2) + '$';
+    document.getElementById('tpsAmount').textContent = tps.toFixed(2) + '$';
+    document.getElementById('tvqAmount').textContent = tvq.toFixed(2) + '$';
+    document.getElementById('totalPrice').textContent = total.toFixed(2) + '$ CAD';
+    
     updatePayBtn();
-}
-
-// Mise à jour du bouton payer
-function updatePayBtn() {
-    const payBtn = document.getElementById('payBtn');
-    const urgent = document.getElementById('urgentDelivery')?.checked || false;
-    let total = selectedPrice + (urgent ? 15 : 0);
-    const base = currentLang === 'fr' ? '💳 Payer' : '💳 Pay';
-    payBtn.innerHTML = `${base} ${total}$ CAD`;
 }
 
 setLang('fr');
