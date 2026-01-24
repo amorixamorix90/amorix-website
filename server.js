@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors');
-const path = require('path');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
@@ -10,24 +10,115 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+// Configuration email
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
+
 // Prix des produits en centimes CAD
 const PRODUCTS = {
     standard: {
         name: 'Chanson Personnalisée - Standard',
-        price: 2900, // 29.00 CAD
+        price: 2900,
         description: '1 chanson personnalisée + MP3 + Paroles PDF'
     },
     couple: {
         name: 'Chanson Personnalisée - Pack Couple',
-        price: 4900, // 49.00 CAD
+        price: 4900,
         description: '2 chansons différentes + MP3 + Paroles PDF'
     },
     deluxe: {
         name: 'Chanson Personnalisée - Pack Deluxe',
-        price: 5500, // 55.00 CAD
+        price: 5500,
         description: '2 chansons + 2 versions chaque (4 MP3) + Paroles PDF'
     }
 };
+
+// Fonction pour envoyer l'email de commande
+async function sendOrderEmail(session, songData) {
+    const product = PRODUCTS[songData.plan] || PRODUCTS.standard;
+    const price = (product.price / 100).toFixed(2);
+    
+    const emailHTML = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #EF5B6C, #D94A5A); padding: 30px; border-radius: 15px 15px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0;">🎵 Nouvelle Commande AMORIX!</h1>
+        </div>
+        
+        <div style="background: #f9f9f9; padding: 30px; border: 1px solid #eee;">
+            <h2 style="color: #EF5B6C; border-bottom: 2px solid #EF5B6C; padding-bottom: 10px;">💰 Détails de la commande</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="padding: 8px 0; font-weight: bold;">Formule:</td><td>${product.name}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Prix:</td><td style="color: #EF5B6C; font-weight: bold;">${price}$ CAD</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Email client:</td><td>${session.customer_email || 'Non fourni'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Date:</td><td>${new Date().toLocaleString('fr-CA')}</td></tr>
+            </table>
+            
+            <h2 style="color: #EF5B6C; border-bottom: 2px solid #EF5B6C; padding-bottom: 10px; margin-top: 30px;">🎤 Informations pour la chanson</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="padding: 8px 0; font-weight: bold;">Pour:</td><td>${songData.recipientName || 'Non spécifié'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Langue:</td><td>${songData.songLanguage === 'french' ? '🇫🇷 Français' : '🇬🇧 Anglais'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Occasion:</td><td>${songData.occasion || 'Non spécifié'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Genre musical:</td><td>${songData.genre || 'Non spécifié'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Ambiance:</td><td>${songData.mood || 'Non spécifié'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Voix:</td><td>${songData.vocal || 'Non spécifié'}</td></tr>
+            </table>
+            
+            <h2 style="color: #EF5B6C; border-bottom: 2px solid #EF5B6C; padding-bottom: 10px; margin-top: 30px;">💕 L'histoire d'amour</h2>
+            
+            <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">📍 Où ils se sont rencontrés:</h4>
+                <p style="margin: 0; color: #555;">${songData.meetStory || 'Non spécifié'}</p>
+            </div>
+            
+            <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">✨ Plus beau souvenir:</h4>
+                <p style="margin: 0; color: #555;">${songData.bestMemory || 'Non spécifié'}</p>
+            </div>
+            
+            <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">❤️ Ce qu'il/elle aime:</h4>
+                <p style="margin: 0; color: #555;">${songData.whatILove || 'Non spécifié'}</p>
+            </div>
+            
+            <div style="background: white; padding: 15px; border-radius: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">🔮 Mot spécial à inclure:</h4>
+                <p style="margin: 0; color: #555;">${songData.specialWord || 'Aucun'}</p>
+            </div>
+        </div>
+        
+        <div style="background: #2A2A2A; padding: 20px; border-radius: 0 0 15px 15px; text-align: center;">
+            <p style="color: white; margin: 0;">AMORIX - Chaque amour a sa chanson 🎵</p>
+        </div>
+    </div>
+    `;
+    
+    // Créer le CSV pour import Google Sheets
+    const csvData = `Date,Email Client,Formule,Prix,Destinataire,Langue,Occasion,Genre,Ambiance,Voix,Rencontre,Souvenir,Ce que j'aime,Mot special
+"${new Date().toLocaleString('fr-CA')}","${session.customer_email || ''}","${product.name}","${price}$","${songData.recipientName || ''}","${songData.songLanguage || ''}","${songData.occasion || ''}","${songData.genre || ''}","${songData.mood || ''}","${songData.vocal || ''}","${(songData.meetStory || '').replace(/"/g, '""')}","${(songData.bestMemory || '').replace(/"/g, '""')}","${(songData.whatILove || '').replace(/"/g, '""')}","${(songData.specialWord || '').replace(/"/g, '""')}"`;
+
+    try {
+        await transporter.sendMail({
+            from: `"AMORIX 🎵" <${process.env.EMAIL_USER}>`,
+            to: 'amorixamorix90@gmail.com',
+            subject: `🎵 Nouvelle commande AMORIX - ${songData.recipientName || 'Client'} - ${price}$ CAD`,
+            html: emailHTML,
+            attachments: [
+                {
+                    filename: `commande-amorix-${Date.now()}.csv`,
+                    content: csvData
+                }
+            ]
+        });
+        console.log('📧 Email envoyé avec succès!');
+    } catch (error) {
+        console.error('❌ Erreur envoi email:', error);
+    }
+}
 
 // Créer une session Stripe Checkout
 app.post('/create-checkout-session', async (req, res) => {
@@ -35,17 +126,6 @@ app.post('/create-checkout-session', async (req, res) => {
         const { plan, songData, email, language } = req.body;
         
         const product = PRODUCTS[plan] || PRODUCTS.standard;
-        
-        // Créer la description avec les détails de la chanson
-        let description = product.description;
-        if (songData) {
-            description += `\n\n--- Détails de la commande ---`;
-            description += `\nPour: ${songData.recipientName || 'Non spécifié'}`;
-            description += `\nOccasion: ${songData.occasion || 'Non spécifié'}`;
-            description += `\nGenre: ${songData.genre || 'Non spécifié'}`;
-            description += `\nAmbiance: ${songData.mood || 'Non spécifié'}`;
-            description += `\nVoix: ${songData.vocal || 'Non spécifié'}`;
-        }
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -56,7 +136,6 @@ app.post('/create-checkout-session', async (req, res) => {
                         product_data: {
                             name: product.name,
                             description: product.description,
-                            images: ['https://i.imgur.com/YourLogo.png'], // Remplace par ton logo
                         },
                         unit_amount: product.price,
                     },
@@ -64,8 +143,8 @@ app.post('/create-checkout-session', async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: `${req.headers.origin || 'http://localhost:3000'}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${req.headers.origin || 'http://localhost:3000'}/#pricing`,
+            success_url: `${req.headers.origin || 'https://amorix-website.onrender.com'}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${req.headers.origin || 'https://amorix-website.onrender.com'}/#pricing`,
             customer_email: email,
             metadata: {
                 plan: plan,
@@ -75,9 +154,9 @@ app.post('/create-checkout-session', async (req, res) => {
                 mood: songData?.mood || '',
                 vocal: songData?.vocal || '',
                 songLanguage: songData?.language || '',
-                meetStory: songData?.meetStory || '',
-                bestMemory: songData?.bestMemory || '',
-                whatILove: songData?.whatILove || '',
+                meetStory: (songData?.meetStory || '').substring(0, 500),
+                bestMemory: (songData?.bestMemory || '').substring(0, 500),
+                whatILove: (songData?.whatILove || '').substring(0, 500),
                 specialWord: songData?.specialWord || '',
             },
             locale: language === 'en' ? 'en' : 'fr',
@@ -90,10 +169,28 @@ app.post('/create-checkout-session', async (req, res) => {
     }
 });
 
-// Vérifier le statut d'une session
+// Vérifier le statut d'une session ET envoyer l'email
 app.get('/session-status', async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+        
+        // Si paiement réussi, envoyer l'email
+        if (session.payment_status === 'paid' && session.metadata) {
+            await sendOrderEmail(session, {
+                plan: session.metadata.plan,
+                recipientName: session.metadata.recipientName,
+                occasion: session.metadata.occasion,
+                genre: session.metadata.genre,
+                mood: session.metadata.mood,
+                vocal: session.metadata.vocal,
+                songLanguage: session.metadata.songLanguage,
+                meetStory: session.metadata.meetStory,
+                bestMemory: session.metadata.bestMemory,
+                whatILove: session.metadata.whatILove,
+                specialWord: session.metadata.specialWord,
+            });
+        }
+        
         res.json({
             status: session.payment_status,
             customer_email: session.customer_details?.email,
@@ -102,33 +199,6 @@ app.get('/session-status', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
-
-// Webhook pour recevoir les événements Stripe (optionnel mais recommandé)
-app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
-    const sig = req.headers['stripe-signature'];
-    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-    let event;
-    try {
-        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-    } catch (err) {
-        console.log(`Webhook signature verification failed.`, err.message);
-        return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    // Gérer les événements
-    switch (event.type) {
-        case 'checkout.session.completed':
-            const session = event.data.object;
-            console.log('Paiement réussi!', session.metadata);
-            // Ici tu peux envoyer un email, sauvegarder en DB, etc.
-            break;
-        default:
-            console.log(`Unhandled event type ${event.type}`);
-    }
-
-    res.json({ received: true });
 });
 
 const PORT = process.env.PORT || 3000;
