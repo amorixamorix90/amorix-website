@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merci! | AMORIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--coral:#EF5B6C;--black:#2A2A2A;--white:#FFF;--gray:#888;--success:#4CAF50}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',sans-serif;background:linear-gradient(135deg,#FDF9F7 0%,#FFF 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+        .container{text-align:center;max-width:600px;background:var(--white);padding:4rem 3rem;border-radius:32px;box-shadow:0 20px 60px rgba(239,91,108,.15)}
+        .success-icon{width:100px;height:100px;background:var(--success);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3rem;margin:0 auto 2rem;animation:pop .5s ease}
+        @keyframes pop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+        h1{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--black);margin-bottom:1rem}
+        .subtitle{color:var(--gray);font-size:1.1rem;line-height:1.7;margin-bottom:2rem}
+        .email-box{background:#F5F5F5;padding:1rem 1.5rem;border-radius:12px;margin-bottom:2rem}
+        .email-box span{color:var(--coral);font-weight:600}
+        .steps{text-align:left;background:#FAFAFA;padding:1.5rem;border-radius:16px;margin-bottom:2rem}
+        .steps h3{font-size:1rem;margin-bottom:1rem;color:var(--black)}
+        .steps li{padding:.5rem 0;color:var(--black);display:flex;align-items:center;gap:.8rem}
+        .steps li::before{content:'✓';color:var(--success);font-weight:700}
+        .btn{padding:1rem 2.5rem;border-radius:50px;font-size:1rem;font-weight:600;text-decoration:none;display:inline-block;background:var(--coral);color:var(--white);transition:all .3s}
+        .btn:hover{background:#D94A5A;transform:translateY(-2px)}
+        .logo{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:2rem;opacity:.5}
+        .logo-text{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--black)}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <h1>Merci pour votre commande!</h1>
+        <p class="subtitle">Votre chanson personnalisée est en cours de création. Vous la recevrez par email dans les prochaines <strong>24 heures</strong>.</p>
+        
+        <div class="email-box">
+            📧 Confirmation envoyée à: <span id="customerEmail">votre email</span>
+        </div>
+
+        <div class="steps">
+            <h3>Prochaines étapes:</h3>
+            <ul style="list-style:none">
+                <li>Vérifiez vos spams si vous ne voyez pas l'email</li>
+                <li>Votre chanson sera livrée en format MP3 + PDF</li>
+                <li>Préparez les mouchoirs pour la surprise! 🎵</li>
+            </ul>
+        </div>
+
+        <a href="/" class="btn">← Retour à l'accueil</a>
+        
+        <div class="logo">
+            <span class="logo-text">AMORIX</span> ♥
+        </div>
+    </div>
+
+    <script>
+        // Récupérer les infos de la session
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        
+        if (sessionId) {
+            fetch(`/session-status?session_id=${sessionId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.customer_email) {
+                        document.getElementById('customerEmail').textContent = data.customer_email;
+                    }
+                })
+                .catch(err => console.log('Erreur:', err));
+        }
+    </script>
+</body>
+</html>
