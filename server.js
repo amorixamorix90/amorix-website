@@ -39,6 +39,8 @@ const PRODUCTS = {
 };
 
 const URGENT_FEE = 1500; // 15$ en centimes
+const TPS_RATE = 0.05;      // 5%
+const TVQ_RATE = 0.09975;   // 9.975%
 
 // Fonction pour envoyer l'email de commande
 async function sendOrderEmail(session, songData) {
@@ -138,6 +140,16 @@ app.post('/create-checkout-session', async (req, res) => {
         
         const product = PRODUCTS[plan] || PRODUCTS.standard;
         
+        // Calculer sous-total
+        let subtotal = product.price;
+        if (urgentDelivery) {
+            subtotal += URGENT_FEE;
+        }
+        
+        // Calculer taxes
+        const tpsAmount = Math.round(subtotal * TPS_RATE);
+        const tvqAmount = Math.round(subtotal * TVQ_RATE);
+        
         // Créer les line items
         const lineItems = [
             {
@@ -159,7 +171,7 @@ app.post('/create-checkout-session', async (req, res) => {
                 price_data: {
                     currency: 'cad',
                     product_data: {
-                        name: '⚡ Livraison urgente (6h)',
+                        name: 'Livraison EXPRESS (6h)',
                         description: 'Livraison express en 6 heures',
                     },
                     unit_amount: URGENT_FEE,
@@ -167,6 +179,32 @@ app.post('/create-checkout-session', async (req, res) => {
                 quantity: 1,
             });
         }
+        
+        // Ajouter TPS
+        lineItems.push({
+            price_data: {
+                currency: 'cad',
+                product_data: {
+                    name: 'TPS (5%)',
+                    description: 'Taxe sur les produits et services',
+                },
+                unit_amount: tpsAmount,
+            },
+            quantity: 1,
+        });
+        
+        // Ajouter TVQ
+        lineItems.push({
+            price_data: {
+                currency: 'cad',
+                product_data: {
+                    name: 'TVQ (9.975%)',
+                    description: 'Taxe de vente du Québec',
+                },
+                unit_amount: tvqAmount,
+            },
+            quantity: 1,
+        });
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
