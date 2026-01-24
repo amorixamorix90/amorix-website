@@ -281,6 +281,7 @@
             </div>
         </div>
         <p style="text-align:center;margin-top:2rem;color:var(--gray);font-size:.85rem">
+            <span data-i18n="pricing.video" style="display:block;margin-bottom:.5rem">🎬 Option vidéo avec paroles disponible (+12$)</span>
             <span data-i18n="pricing.express">Besoin de votre chanson rapidement? Livraison express en 6h disponible (+15$)</span><br>
             <span data-i18n="pricing.taxes" style="font-size:.8rem">Les taxes applicables seront ajoutées au moment du paiement.</span>
         </p>
@@ -485,12 +486,17 @@
                     <div class="payment-summary">
                         <h4 data-i18n="form.s4.summary">Résumé de commande</h4>
                         <div class="payment-item"><span id="productName">Chanson personnalisée</span><span id="productPrice">29.00$</span></div>
+                        <div class="payment-item" id="videoLine" style="display:none"><span data-i18n="form.s4.videoLine">Vidéo avec paroles</span><span>12.00$</span></div>
                         <div class="payment-item" id="urgentLine" style="display:none"><span data-i18n="form.s4.express">Livraison EXPRESS (6h)</span><span>15.00$</span></div>
                         <div class="payment-item" style="color:var(--gray);font-size:.85rem"><span>TPS (5%)</span><span id="tpsAmount">1.45$</span></div>
                         <div class="payment-item" style="color:var(--gray);font-size:.85rem"><span>TVQ (9.975%)</span><span id="tvqAmount">2.89$</span></div>
                         <div class="payment-item total"><span>Total</span><span id="totalPrice">33.34$ CAD</span></div>
                     </div>
                     <div class="form-group">
+                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px;border:2px solid var(--gray-light);border-radius:12px;transition:all .3s;margin-bottom:10px" id="videoLabel">
+                            <input type="checkbox" id="videoOption" onchange="updateTotal()" style="width:20px;height:20px;cursor:pointer">
+                            <span><strong data-i18n="form.s4.videoLabel">🎬 Vidéo avec paroles</strong> <span style="color:var(--coral)">(+12$)</span></span>
+                        </label>
                         <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px;border:2px solid var(--gray-light);border-radius:12px;transition:all .3s" id="urgentLabel">
                             <input type="checkbox" id="urgentDelivery" onchange="updateTotal()" style="width:20px;height:20px;cursor:pointer">
                             <span><strong data-i18n="form.s4.urgentLabel">Livraison EXPRESS en 6h</strong> <span style="color:var(--coral)">(+15$)</span></span>
@@ -525,7 +531,7 @@ const i18n = {
         "pricing.std.name": "Standard", "pricing.std.f1": "1 chanson personnalisée", "pricing.std.f2": "Fichier MP3 haute qualité", "pricing.std.f3": "Paroles en PDF", "pricing.std.f4": "Livraison en 48h",
         "pricing.cpl.badge": "Populaire", "pricing.cpl.name": "Forfait Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "Saint-Valentin + Anniversaire",
         "pricing.dlx.name": "Forfait Deluxe", "pricing.dlx.f1": "2 chansons personnalisées", "pricing.dlx.f2": "2 versions chaque (4 MP3)", "pricing.dlx.f3": "Paroles en PDF", "pricing.dlx.f4": "Variété d'ambiances",
-        "pricing.cta": "Choisir",
+        "pricing.cta": "Choisir", "pricing.video": "🎬 Option vidéo avec paroles disponible (+12$)",
         "test.title": "Ils ont fait pleurer leur partenaire", "test.subtitle": "Des centaines de couples ont déjà vécu ce moment magique.",
         "test.t1": "Après 12 ans de mariage, je pensais plus pouvoir la surprendre. Quand elle a entendu nos prénoms, elle a fondu en larmes!",
         "test.t2": "Mon chum est pas émotif, mais quand il a entendu l'histoire de notre premier date... il a pleuré!",
@@ -550,7 +556,7 @@ const i18n = {
         "form.s3.title": "Style musical", "form.s3.sub": "Choisissez le son parfait pour votre chanson",
         "form.s3.genre": "Genre musical", "form.s3.mood": "Ambiance", "form.s3.vocal": "Voix",
         "form.s4.title": "Récapitulatif et paiement", "form.s4.sub": "Vérifiez vos informations avant de payer", "form.s4.summary": "Résumé de commande",
-        "form.s4.recap": "Vos choix", "form.s4.recapStory": "Votre histoire", "form.s4.express": "Livraison EXPRESS (6h)", "form.s4.urgentLabel": "Livraison EXPRESS en 6h",
+        "form.s4.recap": "Vos choix", "form.s4.recapStory": "Votre histoire", "form.s4.express": "Livraison EXPRESS (6h)", "form.s4.videoLabel": "🎬 Vidéo avec paroles", "form.s4.videoLine": "Vidéo avec paroles", "form.s4.urgentLabel": "Livraison EXPRESS en 6h",
         "form.s4.email": "Email (pour recevoir votre chanson)", "form.s4.emailPh": "votre@email.com",
         "form.s4.pay": "Payer", "form.s4.secure": "Paiement sécurisé via Stripe",
         "form.next": "Continuer", "form.back": "Retour",
@@ -575,7 +581,7 @@ const i18n = {
         "pricing.std.name": "Standard", "pricing.std.f1": "1 personalized song", "pricing.std.f2": "High quality MP3", "pricing.std.f3": "Lyrics PDF", "pricing.std.f4": "48h delivery",
         "pricing.cpl.badge": "Popular", "pricing.cpl.name": "Couple Pack", "pricing.cpl.f1": "2 different songs", "pricing.cpl.f2": "High quality MP3s", "pricing.cpl.f3": "Lyrics PDFs", "pricing.cpl.f4": "Valentine's + Anniversary",
         "pricing.dlx.name": "Deluxe Pack", "pricing.dlx.f1": "2 personalized songs", "pricing.dlx.f2": "2 versions each (4 MP3s)", "pricing.dlx.f3": "Lyrics PDFs", "pricing.dlx.f4": "Variety of moods",
-        "pricing.cta": "Choose",
+        "pricing.cta": "Choose", "pricing.video": "🎬 Video with lyrics option available (+$12)",
         "test.title": "They made their partner cry", "test.subtitle": "Hundreds of couples have already lived this magical moment.",
         "test.t1": "After 12 years of marriage, I thought I couldn't surprise her anymore. When she heard our names, she burst into tears!",
         "test.t2": "My boyfriend isn't emotional, but when he heard our first date story... he cried!",
@@ -600,7 +606,7 @@ const i18n = {
         "form.s3.title": "Musical style", "form.s3.sub": "Choose the perfect sound for your song",
         "form.s3.genre": "Music genre", "form.s3.mood": "Mood", "form.s3.vocal": "Voice",
         "form.s4.title": "Summary and payment", "form.s4.sub": "Review your information before paying", "form.s4.summary": "Order summary",
-        "form.s4.recap": "Your choices", "form.s4.recapStory": "Your story", "form.s4.express": "EXPRESS Delivery (6h)", "form.s4.urgentLabel": "EXPRESS Delivery in 6h",
+        "form.s4.recap": "Your choices", "form.s4.recapStory": "Your story", "form.s4.express": "EXPRESS Delivery (6h)", "form.s4.videoLabel": "🎬 Video with lyrics", "form.s4.videoLine": "Video with lyrics", "form.s4.urgentLabel": "EXPRESS Delivery in 6h",
         "form.s4.email": "Email (to receive your song)", "form.s4.emailPh": "your@email.com",
         "form.s4.pay": "Pay", "form.s4.secure": "Secure payment via Stripe",
         "form.next": "Continue", "form.back": "Back",
@@ -661,6 +667,12 @@ document.querySelectorAll('.open-form').forEach(btn => {
             selectedPlanName = btn.dataset.planName || 'Standard';
             selectedPrice = parseInt(btn.dataset.price) || 29;
         }
+        // Reset video option checkbox
+        document.getElementById('videoOption').checked = false;
+        document.getElementById('videoLine').style.display = 'none';
+        document.getElementById('videoLabel').style.borderColor = 'var(--gray-light)';
+        document.getElementById('videoLabel').style.background = 'transparent';
+        
         // Reset urgent delivery checkbox
         document.getElementById('urgentDelivery').checked = false;
         document.getElementById('urgentLine').style.display = 'none';
@@ -784,6 +796,7 @@ document.getElementById('payBtn').addEventListener('click', async () => {
     const occasionValue = document.getElementById('occasion').value;
     const otherOccasion = document.getElementById('otherOccasion').value;
     const urgentDelivery = document.getElementById('urgentDelivery').checked;
+    const videoOption = document.getElementById('videoOption').checked;
 
     const songData = {
         recipientName: document.getElementById('recipientName').value,
@@ -796,7 +809,8 @@ document.getElementById('payBtn').addEventListener('click', async () => {
         genre: document.getElementById('genre').value,
         mood: document.getElementById('mood').value,
         vocal: document.getElementById('vocal').value,
-        urgentDelivery: urgentDelivery
+        urgentDelivery: urgentDelivery,
+        videoOption: videoOption
     };
 
     try {
@@ -808,7 +822,8 @@ document.getElementById('payBtn').addEventListener('click', async () => {
                 email: email,
                 songData: songData,
                 language: currentLang,
-                urgentDelivery: urgentDelivery
+                urgentDelivery: urgentDelivery,
+                videoOption: videoOption
             })
         });
 
@@ -855,12 +870,30 @@ function toggleOtherField() {
 
 // Mise à jour du total avec livraison urgente et taxes
 function updateTotal() {
+    const video = document.getElementById('videoOption').checked;
+    const videoLine = document.getElementById('videoLine');
+    const videoLabel = document.getElementById('videoLabel');
+    
     const urgent = document.getElementById('urgentDelivery').checked;
     const urgentLine = document.getElementById('urgentLine');
     const urgentLabel = document.getElementById('urgentLabel');
     
     // Sous-total avant taxes
     let subtotal = selectedPrice;
+    
+    // Option vidéo (+12$)
+    if (video) {
+        subtotal += 12;
+        videoLine.style.display = 'flex';
+        videoLabel.style.borderColor = 'var(--coral)';
+        videoLabel.style.background = 'rgba(239,91,108,.05)';
+    } else {
+        videoLine.style.display = 'none';
+        videoLabel.style.borderColor = 'var(--gray-light)';
+        videoLabel.style.background = 'transparent';
+    }
+    
+    // Option express (+15$)
     if (urgent) {
         subtotal += 15;
         urgentLine.style.display = 'flex';
