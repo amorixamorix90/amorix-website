@@ -346,7 +346,7 @@
                         <label data-i18n="form.s1.occasion">Pour quelle occasion?</label>
                         <select id="occasion" onchange="toggleOtherField()">
                             <option value="" disabled selected data-i18n="opt.choose">-- Choisir une occasion --</option>
-                            <option value="valentines" data-i18n="opt.valentines">Saint-Valentin</option>
+                            <option value="valentines" data-i18n="opt.valentines">❤️ Saint-Valentin</option>
                             <option value="anniversary" data-i18n="opt.anniversary">Anniversaire</option>
                             <option value="proposal" data-i18n="opt.proposal">Demande en mariage</option>
                             <option value="datenight" data-i18n="opt.datenight">Soirée romantique</option>
@@ -453,9 +453,30 @@
                                 <span style="color:var(--gray)" data-i18n="recap.mood">Ambiance</span>
                                 <span id="recapMood" style="font-weight:500">-</span>
                             </div>
-                            <div style="display:flex;justify-content:space-between;padding:.3rem 0">
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05)">
                                 <span style="color:var(--gray)" data-i18n="recap.vocal">Voix</span>
                                 <span id="recapVocal" style="font-weight:500">-</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Histoire -->
+                        <h4 style="margin:1.2rem 0 .8rem;color:var(--coral)" data-i18n="form.s4.recapStory">Votre histoire</h4>
+                        <div style="display:grid;gap:.8rem;font-size:.85rem">
+                            <div style="background:var(--white);padding:.8rem;border-radius:8px">
+                                <span style="color:var(--gray);display:block;margin-bottom:.3rem" data-i18n="recap.meet">Rencontre</span>
+                                <span id="recapMeet" style="color:var(--black)">-</span>
+                            </div>
+                            <div style="background:var(--white);padding:.8rem;border-radius:8px">
+                                <span style="color:var(--gray);display:block;margin-bottom:.3rem" data-i18n="recap.memory">Plus beau souvenir</span>
+                                <span id="recapMemory" style="color:var(--black)">-</span>
+                            </div>
+                            <div style="background:var(--white);padding:.8rem;border-radius:8px">
+                                <span style="color:var(--gray);display:block;margin-bottom:.3rem" data-i18n="recap.love">Ce que vous aimez</span>
+                                <span id="recapLove" style="color:var(--black)">-</span>
+                            </div>
+                            <div style="background:var(--white);padding:.8rem;border-radius:8px" id="recapSpecialGroup">
+                                <span style="color:var(--gray);display:block;margin-bottom:.3rem" data-i18n="recap.special">Mot spécial</span>
+                                <span id="recapSpecial" style="color:var(--black)">-</span>
                             </div>
                         </div>
                     </div>
@@ -529,13 +550,14 @@ const i18n = {
         "form.s3.title": "Style musical", "form.s3.sub": "Choisissez le son parfait pour votre chanson",
         "form.s3.genre": "Genre musical", "form.s3.mood": "Ambiance", "form.s3.vocal": "Voix",
         "form.s4.title": "Récapitulatif et paiement", "form.s4.sub": "Vérifiez vos informations avant de payer", "form.s4.summary": "Résumé de commande",
-        "form.s4.recap": "Vos choix", "form.s4.express": "Livraison EXPRESS (6h)", "form.s4.urgentLabel": "Livraison EXPRESS en 6h",
+        "form.s4.recap": "Vos choix", "form.s4.recapStory": "Votre histoire", "form.s4.express": "Livraison EXPRESS (6h)", "form.s4.urgentLabel": "Livraison EXPRESS en 6h",
         "form.s4.email": "Email (pour recevoir votre chanson)", "form.s4.emailPh": "votre@email.com",
         "form.s4.pay": "Payer", "form.s4.secure": "Paiement sécurisé via Stripe",
         "form.next": "Continuer", "form.back": "Retour",
         "recap.recipient": "Pour", "recap.language": "Langue", "recap.occasion": "Occasion", "recap.genre": "Genre", "recap.mood": "Ambiance", "recap.vocal": "Voix",
+        "recap.meet": "Rencontre", "recap.memory": "Plus beau souvenir", "recap.love": "Ce que vous aimez", "recap.special": "Mot spécial",
         "opt.french": "Français", "opt.english": "Anglais",
-        "opt.choose": "-- Choisir une occasion --", "opt.valentines": "Saint-Valentin", "opt.anniversary": "Anniversaire", "opt.proposal": "Demande en mariage", "opt.datenight": "Soirée romantique", "opt.achievement": "Accomplissement", "opt.other": "Autre",
+        "opt.choose": "-- Choisir une occasion --", "opt.valentines": "❤️ Saint-Valentin", "opt.anniversary": "Anniversaire", "opt.proposal": "Demande en mariage", "opt.datenight": "Soirée romantique", "opt.achievement": "Accomplissement", "opt.other": "Autre",
         "opt.pop": "Pop", "opt.rock": "Rock alternatif", "opt.soul": "Soul", "opt.jazz": "Jazz", "opt.country": "Country Québécois", "opt.folk": "Folk", "opt.rnb": "R&B", "opt.afrobeat": "Afrobeat",
         "opt.romantic": "Romantique", "opt.happy": "Joyeux", "opt.heartfelt": "Émouvant", "opt.chill": "Doux/Calme",
         "opt.any": "Peu importe", "opt.male": "Masculine", "opt.female": "Féminine"
@@ -578,13 +600,14 @@ const i18n = {
         "form.s3.title": "Musical style", "form.s3.sub": "Choose the perfect sound for your song",
         "form.s3.genre": "Music genre", "form.s3.mood": "Mood", "form.s3.vocal": "Voice",
         "form.s4.title": "Summary and payment", "form.s4.sub": "Review your information before paying", "form.s4.summary": "Order summary",
-        "form.s4.recap": "Your choices", "form.s4.express": "EXPRESS Delivery (6h)", "form.s4.urgentLabel": "EXPRESS Delivery in 6h",
+        "form.s4.recap": "Your choices", "form.s4.recapStory": "Your story", "form.s4.express": "EXPRESS Delivery (6h)", "form.s4.urgentLabel": "EXPRESS Delivery in 6h",
         "form.s4.email": "Email (to receive your song)", "form.s4.emailPh": "your@email.com",
         "form.s4.pay": "Pay", "form.s4.secure": "Secure payment via Stripe",
         "form.next": "Continue", "form.back": "Back",
         "recap.recipient": "For", "recap.language": "Language", "recap.occasion": "Occasion", "recap.genre": "Genre", "recap.mood": "Mood", "recap.vocal": "Voice",
+        "recap.meet": "How you met", "recap.memory": "Best memory", "recap.love": "What you love", "recap.special": "Special word",
         "opt.french": "French", "opt.english": "English",
-        "opt.choose": "-- Choose an occasion --", "opt.valentines": "Valentine's Day", "opt.anniversary": "Anniversary", "opt.proposal": "Marriage proposal", "opt.datenight": "Date night", "opt.achievement": "Achievement", "opt.other": "Other",
+        "opt.choose": "-- Choose an occasion --", "opt.valentines": "❤️ Valentine's Day", "opt.anniversary": "Anniversary", "opt.proposal": "Marriage proposal", "opt.datenight": "Date night", "opt.achievement": "Achievement", "opt.other": "Other",
         "opt.pop": "Pop", "opt.rock": "Alternative Rock", "opt.soul": "Soul", "opt.jazz": "Jazz", "opt.country": "Country", "opt.folk": "Folk", "opt.rnb": "R&B", "opt.afrobeat": "Afrobeat",
         "opt.romantic": "Romantic", "opt.happy": "Happy", "opt.heartfelt": "Heartfelt", "opt.chill": "Chill",
         "opt.any": "Any", "opt.male": "Male", "opt.female": "Female"
@@ -718,6 +741,24 @@ function fillRecap() {
     document.getElementById('recapGenre').textContent = labels['opt.' + genre] || genre;
     document.getElementById('recapMood').textContent = labels['opt.' + mood] || mood;
     document.getElementById('recapVocal').textContent = labels['opt.' + vocal] || vocal;
+    
+    // Champs texte de l'histoire
+    const meetStory = document.getElementById('meetStory').value || '-';
+    const bestMemory = document.getElementById('bestMemory').value || '-';
+    const whatILove = document.getElementById('whatILove').value || '-';
+    const specialWord = document.getElementById('specialWord').value;
+    
+    document.getElementById('recapMeet').textContent = meetStory;
+    document.getElementById('recapMemory').textContent = bestMemory;
+    document.getElementById('recapLove').textContent = whatILove;
+    
+    // Afficher le mot spécial seulement s'il y en a un
+    if (specialWord) {
+        document.getElementById('recapSpecial').textContent = specialWord;
+        document.getElementById('recapSpecialGroup').style.display = 'block';
+    } else {
+        document.getElementById('recapSpecialGroup').style.display = 'none';
+    }
 }
 
 document.querySelectorAll('.next-btn').forEach(btn => {
