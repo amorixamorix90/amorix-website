@@ -287,25 +287,25 @@
                     <div class="form-group">
                         <label data-i18n="form.s1.lang">Langue de la chanson</label>
                         <select id="songLanguage">
-                            <option value="french">Français</option>
-                            <option value="english">Anglais</option>
+                            <option value="french" data-i18n="opt.french">Français</option>
+                            <option value="english" data-i18n="opt.english">Anglais</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s1.occasion">Pour quelle occasion?</label>
                         <select id="occasion" onchange="toggleOtherField()">
-                            <option value="" disabled selected>-- Choisir une occasion --</option>
-                            <option value="valentines">Saint-Valentin</option>
-                            <option value="anniversary">Anniversaire</option>
-                            <option value="proposal">Demande en mariage</option>
-                            <option value="datenight">Soirée romantique</option>
-                            <option value="achievement">Accomplissement</option>
-                            <option value="other">Autre</option>
+                            <option value="" disabled selected data-i18n="opt.choose">-- Choisir une occasion --</option>
+                            <option value="valentines" data-i18n="opt.valentines">Saint-Valentin</option>
+                            <option value="anniversary" data-i18n="opt.anniversary">Anniversaire</option>
+                            <option value="proposal" data-i18n="opt.proposal">Demande en mariage</option>
+                            <option value="datenight" data-i18n="opt.datenight">Soirée romantique</option>
+                            <option value="achievement" data-i18n="opt.achievement">Accomplissement</option>
+                            <option value="other" data-i18n="opt.other">Autre</option>
                         </select>
                     </div>
                     <div class="form-group" id="otherOccasionGroup" style="display:none;">
-                        <label>Précisez l'occasion</label>
-                        <input type="text" id="otherOccasion" placeholder="Ex: Fête des mères, Naissance, etc.">
+                        <label data-i18n="form.s1.otherLabel">Précisez l'occasion</label>
+                        <input type="text" id="otherOccasion" data-i18n-ph="form.s1.otherPh" placeholder="Ex: Fête des mères, Naissance, etc.">
                     </div>
                     <div class="form-nav"><button class="btn btn-primary next-btn" data-i18n="form.next">Continuer</button></div>
                 </div>
@@ -341,31 +341,31 @@
                     <div class="form-group">
                         <label data-i18n="form.s3.genre">Genre musical</label>
                         <select id="genre">
-                            <option value="pop">Pop</option>
-                            <option value="rock">Rock alternatif</option>
-                            <option value="soul">Soul</option>
-                            <option value="jazz">Jazz</option>
-                            <option value="country">Country Québécois</option>
-                            <option value="folk">Folk</option>
-                            <option value="rnb">R&B</option>
-                            <option value="afrobeat">Afrobeat</option>
+                            <option value="pop" data-i18n="opt.pop">Pop</option>
+                            <option value="rock" data-i18n="opt.rock">Rock alternatif</option>
+                            <option value="soul" data-i18n="opt.soul">Soul</option>
+                            <option value="jazz" data-i18n="opt.jazz">Jazz</option>
+                            <option value="country" data-i18n="opt.country">Country Québécois</option>
+                            <option value="folk" data-i18n="opt.folk">Folk</option>
+                            <option value="rnb" data-i18n="opt.rnb">R&B</option>
+                            <option value="afrobeat" data-i18n="opt.afrobeat">Afrobeat</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s3.mood">Ambiance</label>
                         <select id="mood">
-                            <option value="romantic">Romantique</option>
-                            <option value="happy">Joyeux</option>
-                            <option value="heartfelt">Émouvant</option>
-                            <option value="chill">Doux/Calme</option>
+                            <option value="romantic" data-i18n="opt.romantic">Romantique</option>
+                            <option value="happy" data-i18n="opt.happy">Joyeux</option>
+                            <option value="heartfelt" data-i18n="opt.heartfelt">Émouvant</option>
+                            <option value="chill" data-i18n="opt.chill">Doux/Calme</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="form.s3.vocal">Voix</label>
                         <select id="vocal">
-                            <option value="any">Peu importe</option>
-                            <option value="male">Masculine</option>
-                            <option value="female">Féminine</option>
+                            <option value="any" data-i18n="opt.any">Peu importe</option>
+                            <option value="male" data-i18n="opt.male">Masculine</option>
+                            <option value="female" data-i18n="opt.female">Féminine</option>
                         </select>
                     </div>
                     <div class="form-nav">
@@ -375,12 +375,45 @@
                 </div>
                 <!-- Step 4 - Payment -->
                 <div class="form-step" data-step="4">
-                    <h3 data-i18n="form.s4.title">Paiement sécurisé</h3>
-                    <p class="subtitle" data-i18n="form.s4.sub">Finalisez votre commande via Stripe</p>
+                    <h3 data-i18n="form.s4.title">Récapitulatif et paiement</h3>
+                    <p class="subtitle" data-i18n="form.s4.sub">Vérifiez vos informations avant de payer</p>
+                    
+                    <!-- Récapitulatif des choix -->
+                    <div class="recap-section" style="background:var(--gray-light);border-radius:14px;padding:1.2rem;margin-bottom:1.5rem">
+                        <h4 style="margin-bottom:1rem;color:var(--coral)" data-i18n="form.s4.recap">Vos choix</h4>
+                        <div style="display:grid;gap:.5rem;font-size:.9rem">
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                                <span style="color:var(--gray)" data-i18n="recap.recipient">Pour</span>
+                                <span id="recapRecipient" style="font-weight:500">-</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                                <span style="color:var(--gray)" data-i18n="recap.language">Langue</span>
+                                <span id="recapLanguage" style="font-weight:500">-</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                                <span style="color:var(--gray)" data-i18n="recap.occasion">Occasion</span>
+                                <span id="recapOccasion" style="font-weight:500">-</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                                <span style="color:var(--gray)" data-i18n="recap.genre">Genre</span>
+                                <span id="recapGenre" style="font-weight:500">-</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                                <span style="color:var(--gray)" data-i18n="recap.mood">Ambiance</span>
+                                <span id="recapMood" style="font-weight:500">-</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:.3rem 0">
+                                <span style="color:var(--gray)" data-i18n="recap.vocal">Voix</span>
+                                <span id="recapVocal" style="font-weight:500">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Résumé financier -->
                     <div class="payment-summary">
                         <h4 data-i18n="form.s4.summary">Résumé de commande</h4>
                         <div class="payment-item"><span id="productName">Chanson personnalisée</span><span id="productPrice">29.00$</span></div>
-                        <div class="payment-item" id="urgentLine" style="display:none"><span>Livraison EXPRESS (6h)</span><span>15.00$</span></div>
+                        <div class="payment-item" id="urgentLine" style="display:none"><span data-i18n="form.s4.express">Livraison EXPRESS (6h)</span><span>15.00$</span></div>
                         <div class="payment-item" style="color:var(--gray);font-size:.85rem"><span>TPS (5%)</span><span id="tpsAmount">1.45$</span></div>
                         <div class="payment-item" style="color:var(--gray);font-size:.85rem"><span>TVQ (9.975%)</span><span id="tvqAmount">2.89$</span></div>
                         <div class="payment-item total"><span>Total</span><span id="totalPrice">33.34$ CAD</span></div>
@@ -388,7 +421,7 @@
                     <div class="form-group">
                         <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px;border:2px solid var(--gray-light);border-radius:12px;transition:all .3s" id="urgentLabel">
                             <input type="checkbox" id="urgentDelivery" onchange="updateTotal()" style="width:20px;height:20px;cursor:pointer">
-                            <span><strong>Livraison EXPRESS en 6h</strong> <span style="color:var(--coral)">(+15$)</span></span>
+                            <span><strong data-i18n="form.s4.urgentLabel">Livraison EXPRESS en 6h</strong> <span style="color:var(--coral)">(+15$)</span></span>
                         </label>
                     </div>
                     <div class="form-group">
@@ -411,40 +444,46 @@ const i18n = {
         "nav.how": "Comment ça marche", "nav.pricing": "Tarifs", "nav.testimonials": "Témoignages", "nav.cta": "Commander",
         "hero.badge": "Saint-Valentin 2026 — Places limitées", "hero.title": "Offrez une <span class='accent'>chanson</span><br>qui raconte votre histoire",
         "hero.subtitle": "Une chanson personnalisée créée spécialement pour vous.<br>Vos prénoms, vos souvenirs, votre amour — transformés en musique.",
-        "hero.cta1": "🎵 Créer notre chanson", "hero.cta2": "Découvrir le concept", "hero.price": "| Livraison 48h | MP3 + Paroles",
+        "hero.cta1": "Créer notre chanson", "hero.cta2": "Découvrir le concept", "hero.price": "| Livraison 48h | MP3 + Paroles",
         "how.title": "Comment ça fonctionne?", "how.subtitle": "En 3 étapes simples, recevez une chanson unique qui fera pleurer de joie.",
         "how.s1.title": "Partagez votre histoire", "how.s1.desc": "Répondez à quelques questions: prénoms, moments spéciaux, style musical...",
         "how.s2.title": "Nous créons votre chanson", "how.s2.desc": "En moins de 48h, nous composons une chanson unique avec vos détails.",
         "how.s3.title": "Surprenez votre amour", "how.s3.desc": "Recevez votre MP3 + paroles. Préparez les mouchoirs!",
         "pricing.title": "Choisissez votre formule", "pricing.subtitle": "Un cadeau unique à partir de 29$ — infiniment plus mémorable qu'un resto.",
         "pricing.std.name": "Standard", "pricing.std.f1": "1 chanson personnalisée", "pricing.std.f2": "Fichier MP3 haute qualité", "pricing.std.f3": "Paroles en PDF", "pricing.std.f4": "Livraison en 48h",
-        "pricing.cpl.badge": "⭐ Populaire", "pricing.cpl.name": "Pack Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "Saint-Valentin + Anniversaire",
+        "pricing.cpl.badge": "Populaire", "pricing.cpl.name": "Pack Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "Saint-Valentin + Anniversaire",
         "pricing.dlx.name": "Pack Deluxe", "pricing.dlx.f1": "2 chansons personnalisées", "pricing.dlx.f2": "2 versions chaque (4 MP3)", "pricing.dlx.f3": "Paroles en PDF", "pricing.dlx.f4": "Variété d'ambiances",
         "pricing.cta": "Choisir",
         "test.title": "Ils ont fait pleurer leur partenaire", "test.subtitle": "Des centaines de couples ont déjà vécu ce moment magique.",
         "test.t1": "Après 12 ans de mariage, je pensais plus pouvoir la surprendre. Quand elle a entendu nos prénoms, elle a fondu en larmes!",
         "test.t2": "Mon chum est pas émotif, mais quand il a entendu l'histoire de notre premier date... il a pleuré!",
         "test.t3": "J'ai commandé le Pack Couple. Les deux chansons sont PARFAITES. Service super rapide!",
-        "cta.title": "Prêts à faire pleurer de joie?", "cta.subtitle": "Commandez maintenant et recevez votre chanson en 48h.", "cta.btn": "🎵 Créer notre chanson",
+        "cta.title": "Prêts à faire pleurer de joie?", "cta.subtitle": "Commandez maintenant et recevez votre chanson en 48h.", "cta.btn": "Créer notre chanson",
         "footer.tag": "Chaque amour a sa chanson",
         "form.p1": "Infos", "form.p2": "Histoire", "form.p3": "Style", "form.p4": "Paiement",
         "form.s1.title": "Informations de base", "form.s1.sub": "Commençons par les détails essentiels",
         "form.s1.name": "C'est pour qui cette chanson?", "form.s1.namePh": "Nom de la personne",
         "form.s1.lang": "Langue de la chanson", "form.s1.langFr": "Français", "form.s1.langEn": "Anglais",
-        "form.s1.occasion": "Pour quelle occasion?", "form.s1.occ1": "Saint-Valentin", "form.s1.occ2": "Anniversaire", "form.s1.occ3": "Demande", "form.s1.occ4": "Soirée romantique", "form.s1.occ5": "Accomplissement", "form.s1.occ6": "Autre",
+        "form.s1.occasion": "Pour quelle occasion?",
+        "form.s1.otherLabel": "Précisez l'occasion", "form.s1.otherPh": "Ex: Fête des mères, Naissance, etc.",
         "form.s2.title": "Votre histoire", "form.s2.sub": "Ces détails rendront votre chanson unique",
         "form.s2.meet": "Où vous êtes-vous rencontrés?", "form.s2.meetPh": "Ex: On s'est rencontrés à une fête en 2018...",
         "form.s2.memory": "Votre plus beau souvenir ensemble", "form.s2.memoryPh": "Ex: Notre premier voyage, la demande sur la plage...",
         "form.s2.love": "Qu'aimez-vous le plus chez cette personne?", "form.s2.lovePh": "Ex: Son sourire, sa gentillesse...",
         "form.s2.special": "Un mot spécifique à inclure", "form.s2.specialPh": "Ex: un surnom, une expression...", "form.optional": "(optionnel)",
         "form.s3.title": "Style musical", "form.s3.sub": "Choisissez le son parfait pour votre chanson",
-        "form.s3.genre": "Genre musical", "form.s3.mood": "Ambiance", "form.s3.m1": "Romantique", "form.s3.m2": "Joyeux", "form.s3.m3": "Émouvant", "form.s3.m4": "Doux/Calme",
-        "form.s3.vocal": "Voix", "form.s3.v1": "Peu importe", "form.s3.v2": "Masculine", "form.s3.v3": "Féminine",
-        "form.s4.title": "Paiement sécurisé", "form.s4.sub": "Finalisez votre commande via Stripe", "form.s4.summary": "Résumé de commande",
-        "form.s4.product": "Chanson personnalisée", "form.s4.delivery": "Livraison 48h", "form.s4.included": "Inclus",
+        "form.s3.genre": "Genre musical", "form.s3.mood": "Ambiance", "form.s3.vocal": "Voix",
+        "form.s4.title": "Récapitulatif et paiement", "form.s4.sub": "Vérifiez vos informations avant de payer", "form.s4.summary": "Résumé de commande",
+        "form.s4.recap": "Vos choix", "form.s4.express": "Livraison EXPRESS (6h)", "form.s4.urgentLabel": "Livraison EXPRESS en 6h",
         "form.s4.email": "Email (pour recevoir votre chanson)", "form.s4.emailPh": "votre@email.com",
-        "form.s4.pay": "Payer avec Stripe", "form.s4.secure": "Paiement sécurisé via Stripe",
-        "form.next": "Continuer", "form.back": "Retour"
+        "form.s4.pay": "Payer", "form.s4.secure": "Paiement sécurisé via Stripe",
+        "form.next": "Continuer", "form.back": "Retour",
+        "recap.recipient": "Pour", "recap.language": "Langue", "recap.occasion": "Occasion", "recap.genre": "Genre", "recap.mood": "Ambiance", "recap.vocal": "Voix",
+        "opt.french": "Français", "opt.english": "Anglais",
+        "opt.choose": "-- Choisir une occasion --", "opt.valentines": "Saint-Valentin", "opt.anniversary": "Anniversaire", "opt.proposal": "Demande en mariage", "opt.datenight": "Soirée romantique", "opt.achievement": "Accomplissement", "opt.other": "Autre",
+        "opt.pop": "Pop", "opt.rock": "Rock alternatif", "opt.soul": "Soul", "opt.jazz": "Jazz", "opt.country": "Country Québécois", "opt.folk": "Folk", "opt.rnb": "R&B", "opt.afrobeat": "Afrobeat",
+        "opt.romantic": "Romantique", "opt.happy": "Joyeux", "opt.heartfelt": "Émouvant", "opt.chill": "Doux/Calme",
+        "opt.any": "Peu importe", "opt.male": "Masculine", "opt.female": "Féminine"
     },
     en: {
         "nav.how": "How it works", "nav.pricing": "Pricing", "nav.testimonials": "Reviews", "nav.cta": "Order",
@@ -457,33 +496,39 @@ const i18n = {
         "how.s3.title": "Surprise your love", "how.s3.desc": "Receive your MP3 + lyrics. Get the tissues ready!",
         "pricing.title": "Choose your package", "pricing.subtitle": "A unique gift from $29 — way more memorable than dinner.",
         "pricing.std.name": "Standard", "pricing.std.f1": "1 personalized song", "pricing.std.f2": "High quality MP3", "pricing.std.f3": "Lyrics PDF", "pricing.std.f4": "48h delivery",
-        "pricing.cpl.badge": "⭐ Popular", "pricing.cpl.name": "Couple Pack", "pricing.cpl.f1": "2 different songs", "pricing.cpl.f2": "High quality MP3s", "pricing.cpl.f3": "Lyrics PDFs", "pricing.cpl.f4": "Valentine's + Anniversary",
+        "pricing.cpl.badge": "Popular", "pricing.cpl.name": "Couple Pack", "pricing.cpl.f1": "2 different songs", "pricing.cpl.f2": "High quality MP3s", "pricing.cpl.f3": "Lyrics PDFs", "pricing.cpl.f4": "Valentine's + Anniversary",
         "pricing.dlx.name": "Deluxe Pack", "pricing.dlx.f1": "2 personalized songs", "pricing.dlx.f2": "2 versions each (4 MP3s)", "pricing.dlx.f3": "Lyrics PDFs", "pricing.dlx.f4": "Variety of moods",
         "pricing.cta": "Choose",
         "test.title": "They made their partner cry", "test.subtitle": "Hundreds of couples have already lived this magical moment.",
         "test.t1": "After 12 years of marriage, I thought I couldn't surprise her anymore. When she heard our names, she burst into tears!",
         "test.t2": "My boyfriend isn't emotional, but when he heard our first date story... he cried!",
         "test.t3": "I ordered the Couple Pack. Both songs are PERFECT. Super fast service!",
-        "cta.title": "Ready to bring tears of joy?", "cta.subtitle": "Order now and receive your song within 48h.", "cta.btn": "🎵 Create our song",
+        "cta.title": "Ready to bring tears of joy?", "cta.subtitle": "Order now and receive your song within 48h.", "cta.btn": "Create our song",
         "footer.tag": "Every love has its song",
         "form.p1": "Info", "form.p2": "Story", "form.p3": "Style", "form.p4": "Payment",
         "form.s1.title": "Basic information", "form.s1.sub": "Let's start with the essentials",
         "form.s1.name": "Who is this song for?", "form.s1.namePh": "Person's name",
-        "form.s1.lang": "Song language", "form.s1.langFr": "French", "form.s1.langEn": "English",
-        "form.s1.occasion": "What's the occasion?", "form.s1.occ1": "Valentine's", "form.s1.occ2": "Anniversary", "form.s1.occ3": "Proposal", "form.s1.occ4": "Date night", "form.s1.occ5": "Achievement", "form.s1.occ6": "Other",
+        "form.s1.lang": "Song language",
+        "form.s1.occasion": "What's the occasion?",
+        "form.s1.otherLabel": "Specify the occasion", "form.s1.otherPh": "Ex: Mother's Day, Birth, etc.",
         "form.s2.title": "Your story", "form.s2.sub": "These details will make your song unique",
         "form.s2.meet": "Where did you meet?", "form.s2.meetPh": "Ex: We met at a party in 2018...",
         "form.s2.memory": "Your best memory together", "form.s2.memoryPh": "Ex: Our first trip, the beach proposal...",
         "form.s2.love": "What do you love most about this person?", "form.s2.lovePh": "Ex: Their smile, their kindness...",
         "form.s2.special": "A specific word to include", "form.s2.specialPh": "Ex: a nickname, an expression...", "form.optional": "(optional)",
         "form.s3.title": "Musical style", "form.s3.sub": "Choose the perfect sound for your song",
-        "form.s3.genre": "Music genre", "form.s3.mood": "Mood", "form.s3.m1": "Romantic", "form.s3.m2": "Happy", "form.s3.m3": "Heartfelt", "form.s3.m4": "Chill",
-        "form.s3.vocal": "Voice", "form.s3.v1": "Any", "form.s3.v2": "Male", "form.s3.v3": "Female",
-        "form.s4.title": "Secure payment", "form.s4.sub": "Complete your order via Stripe", "form.s4.summary": "Order summary",
-        "form.s4.product": "Personalized song", "form.s4.delivery": "48h delivery", "form.s4.included": "Included",
+        "form.s3.genre": "Music genre", "form.s3.mood": "Mood", "form.s3.vocal": "Voice",
+        "form.s4.title": "Summary and payment", "form.s4.sub": "Review your information before paying", "form.s4.summary": "Order summary",
+        "form.s4.recap": "Your choices", "form.s4.express": "EXPRESS Delivery (6h)", "form.s4.urgentLabel": "EXPRESS Delivery in 6h",
         "form.s4.email": "Email (to receive your song)", "form.s4.emailPh": "your@email.com",
-        "form.s4.pay": "Pay with Stripe", "form.s4.secure": "Secure payment via Stripe",
-        "form.next": "Continue", "form.back": "Back"
+        "form.s4.pay": "Pay", "form.s4.secure": "Secure payment via Stripe",
+        "form.next": "Continue", "form.back": "Back",
+        "recap.recipient": "For", "recap.language": "Language", "recap.occasion": "Occasion", "recap.genre": "Genre", "recap.mood": "Mood", "recap.vocal": "Voice",
+        "opt.french": "French", "opt.english": "English",
+        "opt.choose": "-- Choose an occasion --", "opt.valentines": "Valentine's Day", "opt.anniversary": "Anniversary", "opt.proposal": "Marriage proposal", "opt.datenight": "Date night", "opt.achievement": "Achievement", "opt.other": "Other",
+        "opt.pop": "Pop", "opt.rock": "Alternative Rock", "opt.soul": "Soul", "opt.jazz": "Jazz", "opt.country": "Country", "opt.folk": "Folk", "opt.rnb": "R&B", "opt.afrobeat": "Afrobeat",
+        "opt.romantic": "Romantic", "opt.happy": "Happy", "opt.heartfelt": "Heartfelt", "opt.chill": "Chill",
+        "opt.any": "Any", "opt.male": "Male", "opt.female": "Female"
     }
 };
 
@@ -580,6 +625,40 @@ function goToStep(step) {
         if (sStep === step) s.classList.add('active');
         if (sStep < step) s.classList.add('done');
     });
+    
+    // Remplir le récapitulatif quand on arrive à l'étape 4
+    if (step === 4) {
+        fillRecap();
+    }
+}
+
+// Remplir le récapitulatif des choix
+function fillRecap() {
+    const lang = currentLang;
+    const labels = i18n[lang];
+    
+    // Récupérer les valeurs
+    const recipient = document.getElementById('recipientName').value || '-';
+    const songLang = document.getElementById('songLanguage').value;
+    const occasion = document.getElementById('occasion').value;
+    const otherOccasion = document.getElementById('otherOccasion').value;
+    const genre = document.getElementById('genre').value;
+    const mood = document.getElementById('mood').value;
+    const vocal = document.getElementById('vocal').value;
+    
+    // Remplir le récapitulatif
+    document.getElementById('recapRecipient').textContent = recipient;
+    document.getElementById('recapLanguage').textContent = labels['opt.' + songLang] || songLang;
+    
+    if (occasion === 'other' && otherOccasion) {
+        document.getElementById('recapOccasion').textContent = otherOccasion;
+    } else {
+        document.getElementById('recapOccasion').textContent = labels['opt.' + occasion] || occasion || '-';
+    }
+    
+    document.getElementById('recapGenre').textContent = labels['opt.' + genre] || genre;
+    document.getElementById('recapMood').textContent = labels['opt.' + mood] || mood;
+    document.getElementById('recapVocal').textContent = labels['opt.' + vocal] || vocal;
 }
 
 document.querySelectorAll('.next-btn').forEach(btn => {
