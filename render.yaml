@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: amorix
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
