@@ -39,6 +39,7 @@ const PRODUCTS = {
 };
 
 const URGENT_FEE = 1500; // 15$ en centimes
+const VIDEO_FEE = 1200;  // 12$ en centimes
 const TPS_RATE = 0.05;      // 5%
 const TVQ_RATE = 0.09975;   // 9.975%
 
@@ -46,17 +47,20 @@ const TVQ_RATE = 0.09975;   // 9.975%
 async function sendOrderEmail(session, songData) {
     const product = PRODUCTS[songData.plan] || PRODUCTS.standard;
     const isUrgent = songData.urgentDelivery === 'true' || songData.urgentDelivery === true;
+    const hasVideo = songData.videoOption === 'true' || songData.videoOption === true;
     const basePrice = product.price / 100;
     const urgentPrice = isUrgent ? 15 : 0;
-    const totalPrice = (basePrice + urgentPrice).toFixed(2);
+    const videoPrice = hasVideo ? 12 : 0;
+    const totalPrice = (basePrice + urgentPrice + videoPrice).toFixed(2);
     
     const deliveryTime = isUrgent ? '⚡ URGENT - 6 HEURES' : '48 heures';
     const urgentBadge = isUrgent ? '<span style="background:#EF5B6C;color:white;padding:5px 10px;border-radius:20px;font-size:12px;margin-left:10px;">⚡ URGENT</span>' : '';
+    const videoBadge = hasVideo ? '<span style="background:#9333EA;color:white;padding:5px 10px;border-radius:20px;font-size:12px;margin-left:10px;">🎬 VIDÉO</span>' : '';
     
     const emailHTML = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: linear-gradient(135deg, #EF5B6C, #D94A5A); padding: 30px; border-radius: 15px 15px 0 0; text-align: center;">
-            <h1 style="color: white; margin: 0;">🎵 Nouvelle Commande AMORIX! ${urgentBadge}</h1>
+            <h1 style="color: white; margin: 0;">🎵 Nouvelle Commande AMORIX! ${urgentBadge}${videoBadge}</h1>
         </div>
         
         <div style="background: #f9f9f9; padding: 30px; border: 1px solid #eee;">
@@ -64,6 +68,7 @@ async function sendOrderEmail(session, songData) {
             <table style="width: 100%; border-collapse: collapse;">
                 <tr><td style="padding: 8px 0; font-weight: bold;">Formule:</td><td>${product.name}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Prix formule:</td><td>${basePrice}$ CAD</td></tr>
+                ${hasVideo ? '<tr><td style="padding: 8px 0; font-weight: bold; color: #9333EA;">🎬 Vidéo avec paroles:</td><td style="color: #9333EA;">+12$ CAD</td></tr>' : ''}
                 ${isUrgent ? '<tr><td style="padding: 8px 0; font-weight: bold; color: #EF5B6C;">⚡ Livraison urgente:</td><td style="color: #EF5B6C;">+15$ CAD</td></tr>' : ''}
                 <tr><td style="padding: 8px 0; font-weight: bold;">Total:</td><td style="color: #EF5B6C; font-weight: bold; font-size: 18px;">${totalPrice}$ CAD</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Délai livraison:</td><td style="font-weight: bold; ${isUrgent ? 'color: #EF5B6C;' : ''}">${deliveryTime}</td></tr>
@@ -79,6 +84,7 @@ async function sendOrderEmail(session, songData) {
                 <tr><td style="padding: 8px 0; font-weight: bold;">Genre musical:</td><td>${songData.genre || 'Non spécifié'}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Ambiance:</td><td>${songData.mood || 'Non spécifié'}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Voix:</td><td>${songData.vocal || 'Non spécifié'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Vidéo:</td><td>${hasVideo ? '✅ Oui' : '❌ Non'}</td></tr>
             </table>
             
             <h2 style="color: #EF5B6C; border-bottom: 2px solid #EF5B6C; padding-bottom: 10px; margin-top: 30px;">💕 L'histoire d'amour</h2>
@@ -136,12 +142,15 @@ async function sendOrderEmail(session, songData) {
 // Créer une session Stripe Checkout
 app.post('/create-checkout-session', async (req, res) => {
     try {
-        const { plan, songData, email, language, urgentDelivery } = req.body;
+        const { plan, songData, email, language, urgentDelivery, videoOption } = req.body;
         
         const product = PRODUCTS[plan] || PRODUCTS.standard;
         
         // Calculer sous-total
         let subtotal = product.price;
+        if (videoOption) {
+            subtotal += VIDEO_FEE;
+        }
         if (urgentDelivery) {
             subtotal += URGENT_FEE;
         }
@@ -175,6 +184,21 @@ app.post('/create-checkout-session', async (req, res) => {
                         description: 'Livraison express en 6 heures',
                     },
                     unit_amount: URGENT_FEE,
+                },
+                quantity: 1,
+            });
+        }
+        
+        // Ajouter option vidéo si sélectionné
+        if (videoOption) {
+            lineItems.push({
+                price_data: {
+                    currency: 'cad',
+                    product_data: {
+                        name: 'Vidéo avec paroles',
+                        description: 'Vidéo générée avec les paroles de la chanson',
+                    },
+                    unit_amount: VIDEO_FEE,
                 },
                 quantity: 1,
             });
