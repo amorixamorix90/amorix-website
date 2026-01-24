@@ -76,6 +76,16 @@
         .testimonial-author .avatar{width:50px;height:50px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:600}
         .testimonial-author .info strong{display:block;color:var(--black)}
         .testimonial-author .info span{font-size:.85rem;color:var(--gray)}
+        .samples{padding:5rem 2rem;background:var(--gray-light)}
+        .samples-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto}
+        .sample-card{background:var(--white);border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.05);transition:all .3s}
+        .sample-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+        .sample-info{margin-bottom:1rem}
+        .sample-genre{display:inline-block;background:var(--coral);color:var(--white);padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;margin-bottom:.5rem}
+        .sample-info h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--black);margin-bottom:.3rem}
+        .sample-info p{font-size:.85rem;color:var(--gray)}
+        .sample-audio{width:100%;height:40px;border-radius:20px}
+        .sample-audio::-webkit-media-controls-panel{background:var(--gray-light)}
         .footer-cta{background:var(--coral);color:var(--white);text-align:center;padding:5rem 2rem}
         .footer-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:1rem}
         .footer-cta p{opacity:.9;margin-bottom:2rem;font-size:1.1rem}
@@ -142,6 +152,7 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#how" data-i18n="nav.how">Comment ça marche</a></li>
+                <li><a href="#samples" data-i18n="nav.samples">Exemples</a></li>
                 <li><a href="#pricing" data-i18n="nav.pricing">Tarifs</a></li>
                 <li><a href="#testimonials" data-i18n="nav.testimonials">Témoignages</a></li>
                 <li>
@@ -188,6 +199,46 @@
         </div>
     </section>
 
+    <!-- Section Exemples Audio -->
+    <section class="samples" id="samples">
+        <div class="section-header">
+            <h2 data-i18n="samples.title">Écoutez nos créations</h2>
+            <p data-i18n="samples.subtitle">Voici quelques exemples de chansons personnalisées que nous avons créées.</p>
+        </div>
+        <div class="samples-grid">
+            <div class="sample-card">
+                <div class="sample-info">
+                    <span class="sample-genre">Pop</span>
+                    <h4 data-i18n="samples.s1.title">Pour Marie - Saint-Valentin</h4>
+                    <p data-i18n="samples.s1.desc">Une chanson romantique pour célébrer 5 ans d'amour</p>
+                </div>
+                <audio controls class="sample-audio">
+                    <source src="/audio/exemple-1.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+            <div class="sample-card">
+                <div class="sample-info">
+                    <span class="sample-genre">Soul</span>
+                    <h4 data-i18n="samples.s2.title">Pour Alex - Anniversaire</h4>
+                    <p data-i18n="samples.s2.desc">Un morceau émouvant pour un 10e anniversaire de mariage</p>
+                </div>
+                <audio controls class="sample-audio">
+                    <source src="/audio/exemple-2.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+            <div class="sample-card">
+                <div class="sample-info">
+                    <span class="sample-genre">Folk</span>
+                    <h4 data-i18n="samples.s3.title">Pour Sophie - Demande</h4>
+                    <p data-i18n="samples.s3.desc">Une chanson douce pour accompagner une demande en mariage</p>
+                </div>
+                <audio controls class="sample-audio">
+                    <source src="/audio/exemple-3.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </section>
+
     <section class="pricing" id="pricing">
         <div class="section-header">
             <h2 data-i18n="pricing.title">Choisissez votre formule</h2>
@@ -207,7 +258,7 @@
             </div>
             <div class="pricing-card featured">
                 <span class="badge" data-i18n="pricing.cpl.badge">⭐ Populaire</span>
-                <h3 data-i18n="pricing.cpl.name">Pack Couple</h3>
+                <h3 data-i18n="pricing.cpl.name">Forfait Couple</h3>
                 <div class="price">49$<span> CAD</span></div>
                 <ul>
                     <li data-i18n="pricing.cpl.f1">2 chansons différentes</li>
@@ -215,10 +266,10 @@
                     <li data-i18n="pricing.cpl.f3">Paroles en PDF</li>
                     <li data-i18n="pricing.cpl.f4">Saint-Valentin + Anniversaire</li>
                 </ul>
-                <button class="btn btn-primary open-form" data-plan="couple" data-plan-name="Pack Couple" data-price="49" data-i18n="pricing.cta">Choisir</button>
+                <button class="btn btn-primary open-form" data-plan="couple" data-plan-name="Forfait Couple" data-price="49" data-i18n="pricing.cta">Choisir</button>
             </div>
             <div class="pricing-card">
-                <h3 data-i18n="pricing.dlx.name">Pack Deluxe</h3>
+                <h3 data-i18n="pricing.dlx.name">Forfait Deluxe</h3>
                 <div class="price">55$<span> CAD</span></div>
                 <ul>
                     <li data-i18n="pricing.dlx.f1">2 chansons personnalisées</li>
@@ -226,7 +277,7 @@
                     <li data-i18n="pricing.dlx.f3">Paroles en PDF</li>
                     <li data-i18n="pricing.dlx.f4">Variété d'ambiances</li>
                 </ul>
-                <button class="btn btn-secondary open-form" data-plan="deluxe" data-plan-name="Pack Deluxe" data-price="55" data-i18n="pricing.cta">Choisir</button>
+                <button class="btn btn-secondary open-form" data-plan="deluxe" data-plan-name="Forfait Deluxe" data-price="55" data-i18n="pricing.cta">Choisir</button>
             </div>
         </div>
         <p style="text-align:center;margin-top:2rem;color:var(--gray);font-size:.85rem">
@@ -243,7 +294,7 @@
         <div class="testimonial-grid">
             <div class="testimonial"><p data-i18n="test.t1">Après 12 ans de mariage, je pensais plus pouvoir la surprendre. Quand elle a entendu nos prénoms, elle a fondu en larmes!</p><div class="testimonial-author"><div class="avatar">MS</div><div class="info"><strong>Marc S.</strong><span>Montréal</span></div></div></div>
             <div class="testimonial"><p data-i18n="test.t2">Mon chum est pas émotif, mais quand il a entendu l'histoire de notre premier date... il a pleuré!</p><div class="testimonial-author"><div class="avatar">JL</div><div class="info"><strong>Julie L.</strong><span>Québec</span></div></div></div>
-            <div class="testimonial"><p data-i18n="test.t3">J'ai commandé le Pack Couple. Les deux chansons sont PARFAITES. Service super rapide!</p><div class="testimonial-author"><div class="avatar">PD</div><div class="info"><strong>Philippe D.</strong><span>Laval</span></div></div></div>
+            <div class="testimonial"><p data-i18n="test.t3">J'ai commandé le Forfait Couple. Les deux chansons sont PARFAITES. Service super rapide!</p><div class="testimonial-author"><div class="avatar">PD</div><div class="info"><strong>Philippe D.</strong><span>Laval</span></div></div></div>
         </div>
     </section>
 
@@ -441,7 +492,7 @@
 <script>
 const i18n = {
     fr: {
-        "nav.how": "Comment ça marche", "nav.pricing": "Tarifs", "nav.testimonials": "Témoignages", "nav.cta": "Commander",
+        "nav.how": "Comment ça marche", "nav.samples": "Exemples", "nav.pricing": "Tarifs", "nav.testimonials": "Témoignages", "nav.cta": "Commander",
         "hero.badge": "Saint-Valentin 2026 — Places limitées", "hero.title": "Offrez une <span class='accent'>chanson</span><br>qui raconte votre histoire",
         "hero.subtitle": "Une chanson personnalisée créée spécialement pour vous.<br>Vos prénoms, vos souvenirs, votre amour — transformés en musique.",
         "hero.cta1": "Créer notre chanson", "hero.cta2": "Découvrir le concept", "hero.price": "| Livraison 48h | MP3 + Paroles",
@@ -451,15 +502,19 @@ const i18n = {
         "how.s3.title": "Surprenez votre amour", "how.s3.desc": "Recevez votre MP3 + paroles. Préparez les mouchoirs!",
         "pricing.title": "Choisissez votre formule", "pricing.subtitle": "Un cadeau unique à partir de 29$ — infiniment plus mémorable qu'un resto.",
         "pricing.std.name": "Standard", "pricing.std.f1": "1 chanson personnalisée", "pricing.std.f2": "Fichier MP3 haute qualité", "pricing.std.f3": "Paroles en PDF", "pricing.std.f4": "Livraison en 48h",
-        "pricing.cpl.badge": "Populaire", "pricing.cpl.name": "Pack Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "Saint-Valentin + Anniversaire",
-        "pricing.dlx.name": "Pack Deluxe", "pricing.dlx.f1": "2 chansons personnalisées", "pricing.dlx.f2": "2 versions chaque (4 MP3)", "pricing.dlx.f3": "Paroles en PDF", "pricing.dlx.f4": "Variété d'ambiances",
+        "pricing.cpl.badge": "Populaire", "pricing.cpl.name": "Forfait Couple", "pricing.cpl.f1": "2 chansons différentes", "pricing.cpl.f2": "Fichiers MP3 haute qualité", "pricing.cpl.f3": "Paroles en PDF", "pricing.cpl.f4": "Saint-Valentin + Anniversaire",
+        "pricing.dlx.name": "Forfait Deluxe", "pricing.dlx.f1": "2 chansons personnalisées", "pricing.dlx.f2": "2 versions chaque (4 MP3)", "pricing.dlx.f3": "Paroles en PDF", "pricing.dlx.f4": "Variété d'ambiances",
         "pricing.cta": "Choisir",
         "test.title": "Ils ont fait pleurer leur partenaire", "test.subtitle": "Des centaines de couples ont déjà vécu ce moment magique.",
         "test.t1": "Après 12 ans de mariage, je pensais plus pouvoir la surprendre. Quand elle a entendu nos prénoms, elle a fondu en larmes!",
         "test.t2": "Mon chum est pas émotif, mais quand il a entendu l'histoire de notre premier date... il a pleuré!",
-        "test.t3": "J'ai commandé le Pack Couple. Les deux chansons sont PARFAITES. Service super rapide!",
+        "test.t3": "J'ai commandé le Forfait Couple. Les deux chansons sont PARFAITES. Service super rapide!",
         "cta.title": "Prêts à faire pleurer de joie?", "cta.subtitle": "Commandez maintenant et recevez votre chanson en 48h.", "cta.btn": "Créer notre chanson",
         "footer.tag": "Chaque amour a sa chanson",
+        "samples.title": "Écoutez nos créations", "samples.subtitle": "Voici quelques exemples de chansons personnalisées que nous avons créées.",
+        "samples.s1.title": "Pour Marie - Saint-Valentin", "samples.s1.desc": "Une chanson romantique pour célébrer 5 ans d'amour",
+        "samples.s2.title": "Pour Alex - Anniversaire", "samples.s2.desc": "Un morceau émouvant pour un 10e anniversaire de mariage",
+        "samples.s3.title": "Pour Sophie - Demande", "samples.s3.desc": "Une chanson douce pour accompagner une demande en mariage",
         "form.p1": "Infos", "form.p2": "Histoire", "form.p3": "Style", "form.p4": "Paiement",
         "form.s1.title": "Informations de base", "form.s1.sub": "Commençons par les détails essentiels",
         "form.s1.name": "C'est pour qui cette chanson?", "form.s1.namePh": "Nom de la personne",
@@ -486,7 +541,7 @@ const i18n = {
         "opt.any": "Peu importe", "opt.male": "Masculine", "opt.female": "Féminine"
     },
     en: {
-        "nav.how": "How it works", "nav.pricing": "Pricing", "nav.testimonials": "Reviews", "nav.cta": "Order",
+        "nav.how": "How it works", "nav.samples": "Samples", "nav.pricing": "Pricing", "nav.testimonials": "Reviews", "nav.cta": "Order",
         "hero.badge": "Valentine's 2026 — Limited spots", "hero.title": "Gift a <span class='accent'>song</span><br>that tells your story",
         "hero.subtitle": "A personalized song created just for you.<br>Your names, your memories, your love — turned into music.",
         "hero.cta1": "🎵 Create our song", "hero.cta2": "Discover the concept", "hero.price": "| 48h delivery | MP3 + Lyrics",
@@ -505,6 +560,10 @@ const i18n = {
         "test.t3": "I ordered the Couple Pack. Both songs are PERFECT. Super fast service!",
         "cta.title": "Ready to bring tears of joy?", "cta.subtitle": "Order now and receive your song within 48h.", "cta.btn": "Create our song",
         "footer.tag": "Every love has its song",
+        "samples.title": "Listen to our creations", "samples.subtitle": "Here are some examples of personalized songs we've created.",
+        "samples.s1.title": "For Marie - Valentine's Day", "samples.s1.desc": "A romantic song to celebrate 5 years of love",
+        "samples.s2.title": "For Alex - Anniversary", "samples.s2.desc": "A touching piece for a 10th wedding anniversary",
+        "samples.s3.title": "For Sophie - Proposal", "samples.s3.desc": "A soft song to accompany a marriage proposal",
         "form.p1": "Info", "form.p2": "Story", "form.p3": "Style", "form.p4": "Payment",
         "form.s1.title": "Basic information", "form.s1.sub": "Let's start with the essentials",
         "form.s1.name": "Who is this song for?", "form.s1.namePh": "Person's name",
