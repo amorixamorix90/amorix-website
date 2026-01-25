@@ -160,7 +160,7 @@ async function sendClientConfirmationEmail(session, songData, language = 'fr') {
     const totalPrice = (subtotal + tps + tvq).toFixed(2);
     
     const deliveryTime = isUrgent ? (language === 'en' ? '6 hours' : '6 heures') : '48h';
-    const recipientName = songData.recipientName || (language === 'en' ? 'your loved one' : 'votre être cher');
+    const recipientName = songData.recipientName || (language === 'en' ? 'your loved one' : 'ton être cher');
     
     // Contenu bilingue
     const content = language === 'en' ? {
@@ -181,8 +181,8 @@ async function sendClientConfirmationEmail(session, songData, language = 'fr') {
         closing: `With love,<br>The AMORIX Team 🎵`,
         footer: `You're receiving this email because you placed an order on amorix-website.onrender.com`
     } : {
-        subject: `🎵 Votre commande AMORIX est confirmée!`,
-        greeting: `Merci pour votre commande!`,
+        subject: `🎵 Ta commande AMORIX est confirmée!`,
+        greeting: `Merci pour ta commande!`,
         intro: `Nous sommes ravis de créer une chanson personnalisée pour <strong>${recipientName}</strong>. Notre équipe travaille déjà à rendre ce moment inoubliable.`,
         orderTitle: `Résumé de la commande`,
         product: `Produit`,
@@ -191,12 +191,12 @@ async function sendClientConfirmationEmail(session, songData, language = 'fr') {
         subtotal: `Sous-total`,
         total: `Total`,
         nextTitle: `Prochaines étapes`,
-        step1: `<strong>Création en cours</strong> - Nos artistes composent votre chanson unique`,
-        step2: `<strong>Livraison</strong> - Vous recevrez votre MP3 ${hasVideo ? '+ vidéo ' : ''}par email dans <strong>${deliveryTime}</strong>`,
-        step3: `<strong>Surprise!</strong> - Préparez-vous à voir des larmes de joie!`,
+        step1: `<strong>Création en cours</strong> - Nos artistes composent ta chanson unique`,
+        step2: `<strong>Livraison</strong> - Tu recevras ton MP3 ${hasVideo ? '+ vidéo ' : ''}par email dans <strong>${deliveryTime}</strong>`,
+        step3: `<strong>Surprise!</strong> - Prépare-toi à voir des larmes de joie!`,
         questions: `Des questions? Répondez à cet email ou contactez-nous à amorixamorix90@gmail.com`,
         closing: `Avec amour,<br>L'équipe AMORIX 🎵`,
-        footer: `Vous recevez cet email car vous avez passé une commande sur amorix-website.onrender.com`
+        footer: `Tu reçois cet email car tu as passé une commande sur amorix-website.onrender.com`
     };
     
     const emailHTML = `
