@@ -89,6 +89,23 @@
         .sample-info p{font-size:.85rem;color:var(--gray)}
         .sample-audio{width:100%;height:40px;border-radius:20px}
         .sample-audio::-webkit-media-controls-panel{background:var(--gray-light)}
+        .playlist-container{background:var(--black);border-radius:16px;overflow:hidden;max-width:800px;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+        .playlist-player{padding:1.5rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .playlist-player-info{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+        .playlist-player-cover{width:80px;height:80px;background:var(--coral);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2rem}
+        .playlist-player-details h4{color:var(--white);font-size:1.1rem;margin-bottom:.3rem}
+        .playlist-player-details span{color:rgba(255,255,255,.6);font-size:.85rem}
+        .playlist-player audio{width:100%;height:40px}
+        .playlist-items{max-height:300px;overflow-y:auto}
+        .playlist-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;cursor:pointer;transition:background .2s;border-bottom:1px solid rgba(255,255,255,.05)}
+        .playlist-item:hover{background:rgba(255,255,255,.05)}
+        .playlist-item.active{background:rgba(239,91,108,.2)}
+        .playlist-item-play{width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.8rem}
+        .playlist-item.active .playlist-item-play{background:var(--coral)}
+        .playlist-item-info{flex:1}
+        .playlist-item-info h5{color:var(--white);font-size:.95rem;margin-bottom:.2rem;font-weight:500}
+        .playlist-item-info span{color:rgba(255,255,255,.5);font-size:.8rem}
+        .playlist-item-duration{color:rgba(255,255,255,.5);font-size:.85rem}
         .footer-cta{background:var(--coral);color:var(--white);text-align:center;padding:5rem 2rem}
         .footer-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:1rem}
         .footer-cta p{opacity:.9;margin-bottom:2rem;font-size:1.1rem}
@@ -210,36 +227,44 @@
             <h2 data-i18n="samples.title">Écoute nos créations</h2>
             <p data-i18n="samples.subtitle">Voici quelques exemples de chansons personnalisées qu'on a créées.</p>
         </div>
-        <div class="samples-grid">
-            <div class="sample-card">
-                <div class="sample-info">
-                    <span class="sample-genre">Pop</span>
-                    <h4 data-i18n="samples.s1.title">Pour Marie - Saint-Valentin</h4>
-                    <p data-i18n="samples.s1.desc">Une chanson romantique pour célébrer 5 ans d'amour</p>
+        <div class="playlist-container">
+            <div class="playlist-player">
+                <div class="playlist-player-info">
+                    <div class="playlist-player-cover" id="playerCover">🎵</div>
+                    <div class="playlist-player-details">
+                        <h4 id="playerTitle">Pour Marie - Saint-Valentin</h4>
+                        <span id="playerGenre">Français - Pop - Romantique</span>
+                    </div>
                 </div>
-                <audio controls class="sample-audio">
-                    <source src="/audio/exemple-1.mp3" type="audio/mpeg">
+                <audio controls id="mainPlayer" style="width:100%">
+                    <source src="/audio/exemple-1.mp3" type="audio/mpeg" id="audioSource">
                 </audio>
             </div>
-            <div class="sample-card">
-                <div class="sample-info">
-                    <span class="sample-genre">Rock Alternatif</span>
-                    <h4 data-i18n="samples.s2.title">Pour Marc-André - Saint-Valentin</h4>
-                    <p data-i18n="samples.s2.desc">Une chanson d'amour rock pour célébrer leur histoire</p>
+            <div class="playlist-items">
+                <div class="playlist-item active" data-src="/audio/exemple-1.mp3" data-title="Pour Marie - Saint-Valentin" data-genre="Français - Pop - Romantique" data-duration="2:14">
+                    <div class="playlist-item-play">▶</div>
+                    <div class="playlist-item-info">
+                        <h5>Pour Marie - Saint-Valentin</h5>
+                        <span>Français - Pop - Romantique</span>
+                    </div>
+                    <span class="playlist-item-duration">2:14</span>
                 </div>
-                <audio controls class="sample-audio">
-                    <source src="/audio/exemple-2.mp3" type="audio/mpeg">
-                </audio>
-            </div>
-            <div class="sample-card">
-                <div class="sample-info">
-                    <span class="sample-genre">Afrobeat</span>
-                    <h4 data-i18n="samples.s3.title">Pour Marie-Claude - Saint-Valentin</h4>
-                    <p data-i18n="samples.s3.desc">Une chanson Afrobeat pour célébrer leur amour</p>
+                <div class="playlist-item" data-src="/audio/exemple-2.mp3" data-title="Pour Camille - Saint-Valentin" data-genre="Français - Rock Alternatif - Émotionnel" data-duration="0:50">
+                    <div class="playlist-item-play">▶</div>
+                    <div class="playlist-item-info">
+                        <h5>Pour Camille - Saint-Valentin</h5>
+                        <span>Français - Rock Alternatif - Émotionnel</span>
+                    </div>
+                    <span class="playlist-item-duration">0:50</span>
                 </div>
-                <audio controls class="sample-audio">
-                    <source src="/audio/exemple-3.mp3" type="audio/mpeg">
-                </audio>
+                <div class="playlist-item" data-src="/audio/exemple-3.mp3" data-title="Pour Marie-Claude - Saint-Valentin" data-genre="Français - Afrobeat - Joyeux" data-duration="1:02">
+                    <div class="playlist-item-play">▶</div>
+                    <div class="playlist-item-info">
+                        <h5>Pour Marie-Claude - Saint-Valentin</h5>
+                        <span>Français - Afrobeat - Joyeux</span>
+                    </div>
+                    <span class="playlist-item-duration">1:02</span>
+                </div>
             </div>
         </div>
     </section>
@@ -948,5 +973,25 @@ setLang('fr');
         setInterval(createHeart,3000);
     })();
     </script>
-</body>
+
+    <script>
+    // Playlist functionality
+    document.querySelectorAll('.playlist-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const src = this.dataset.src;
+            const title = this.dataset.title;
+            const genre = this.dataset.genre;
+            
+            document.getElementById('audioSource').src = src;
+            document.getElementById('playerTitle').textContent = title;
+            document.getElementById('playerGenre').textContent = genre;
+            document.getElementById('mainPlayer').load();
+            document.getElementById('mainPlayer').play();
+            
+            document.querySelectorAll('.playlist-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+    </script>
 </html>
+</body>
